@@ -63,7 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BackEnd\MyAlghoritms.cs" />
+    <Compile Include="BackEnd\MyPermute.cs" />
     <Compile Include="BackEnd\Task.cs" />
     <Compile Include="BackEnd\WorkCenter.cs" />
     <Compile Include="MainWindow.xaml.cs">
