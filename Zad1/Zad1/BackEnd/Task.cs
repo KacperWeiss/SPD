@@ -8,6 +8,12 @@ namespace Zad1.BackEnd
 {
     public class Task
     {
+        public Task(int iD, int timeSpan)
+        {
+            ID = iD;
+            TimeSpan = timeSpan;
+        }
+
         public int ID { get; set; }
         public int TimeSpan { get; set; }
     }
