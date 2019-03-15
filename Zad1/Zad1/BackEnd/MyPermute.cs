@@ -8,7 +8,7 @@ namespace Zad1.BackEnd
 {
     static class MyPermute
     {
-        static List<List<Task>> taskLists = new List<List<Task>>();
+        public static List<List<Task>> taskLists = new List<List<Task>>();
 
         public static List<List<Task>> TaskLists { get => taskLists; set => taskLists = value; }
 
@@ -20,7 +20,6 @@ namespace Zad1.BackEnd
             return TaskLists;
         }
 
-
         public static void Swap<T>(this List<T> list, int index1, int index2)
         {
             T tmp = list[index1];
@@ -28,18 +27,11 @@ namespace Zad1.BackEnd
             list[index2] = tmp;
         }
 
-        //private static void Swap(Task a, Task b)
-        //{
-        //    Task temporaryTask = a;
-        //    a = b;
-        //    b = temporaryTask;
-        //}
-
         private static void PermuteTasks(List<Task> tasks, int lowIt, int highIt)
         {
             if (lowIt == highIt)
             {
-                TaskLists.Add(tasks);
+                TaskLists.Add(new List<Task>(tasks));
             }
             else
             {
@@ -50,6 +42,7 @@ namespace Zad1.BackEnd
                     Swap(tasks, lowIt, i);
                 }
             }
+
         }
     }
 }
