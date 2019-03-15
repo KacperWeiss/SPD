@@ -7,14 +7,23 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <ListView x:Name="TestList" HorizontalAlignment="Left" Height="321.281" Margin="59.844,23.458,0,0" VerticalAlignment="Top" Width="300.687">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80*"/>
+            <ColumnDefinition Width="59*"/>
+            <ColumnDefinition Width="59*"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="TestList1" HorizontalAlignment="Left" Height="321" Margin="10,88,0,0" VerticalAlignment="Top" Width="301">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Button" HorizontalAlignment="Left" Height="50.458" Margin="545.886,62.588,0,0" VerticalAlignment="Top" Width="152.402" Click="InitializeTestList"/>
+        <Button Content="Button" HorizontalAlignment="Left" Height="51" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Click="InitializeTestList"/>
+        <TextBox HorizontalAlignment="Left" Height="23.755" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="138.136" Grid.Column="1"/>
+        <Button Content="Button" HorizontalAlignment="Left" Height="23.755" Margin="153.136,10,0,0" VerticalAlignment="Top" Width="76.679" Click="InitializeTestList" Grid.Column="1"/>
+        <TextBox HorizontalAlignment="Left" Height="23.755" Margin="10,38.755,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="138.136" Grid.Column="1"/>
+        <TextBox HorizontalAlignment="Left" Height="23.755" Margin="10,67.51,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="138.136" Grid.Column="1"/>
 
     </Grid>
 </Window>

@@ -29,7 +29,7 @@ namespace Zad1
 
         private void InitializeTestList(object sender, RoutedEventArgs e)
         {
-            var taskLists = BackEnd.MyPermute.PermuteTasks(new List<BackEnd.Task> { new BackEnd.Task(1, 5), new BackEnd.Task(2, 5), new BackEnd.Task(3, 5), new BackEnd.Task(4, 5) });
+            var taskLists = BackEnd.MyPermute.PermuteTasks(new List<BackEnd.Task> { new BackEnd.Task(1, 3), new BackEnd.Task(2, 12), new BackEnd.Task(3, 15), new BackEnd.Task(4, 2) });
             foreach (List<BackEnd.Task> tasks in taskLists)
             {
                 List<int> Ids = new List<int>();
