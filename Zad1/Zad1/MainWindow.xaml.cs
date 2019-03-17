@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Zad1.BackEnd;
+using Task = Zad1.BackEnd.Task;
 
 namespace Zad1
 {
@@ -21,24 +22,53 @@ namespace Zad1
     /// </summary>
     public partial class MainWindow : Window
     {
+       
         public MainWindow()
         {
             InitializeComponent();
-            //TestList.ItemsSource = MyPermute.TaskLists;
+            this.DataContext = this;
+            Initializer.initialize();
+            
         }
 
-        private void InitializeTestList(object sender, RoutedEventArgs e)
+        private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            var taskLists = BackEnd.MyPermute.PermuteTasks(new List<BackEnd.Task> { new BackEnd.Task(1, 3), new BackEnd.Task(2, 12), new BackEnd.Task(3, 15), new BackEnd.Task(4, 2) });
-            foreach (List<BackEnd.Task> tasks in taskLists)
+            Initializer.simulation();
+
+            foreach (Task task in Initializer.firstMachinePermuteResult[3])
             {
-                List<int> Ids = new List<int>();
-                foreach (BackEnd.Task task in tasks)
+                Rectangle rectangle = new Rectangle()
                 {
-                    Ids.Add(task.ID);
-                }
-                TestList.Items.Add(String.Join(", ", Ids));
+                    Width = (15 * task.TimeSpan) - 1,
+                    Height = 20,
+                    Fill = Brushes.Green,
+                    Stroke = Brushes.Red,
+                    StrokeThickness = 2,
+                };
+
+                canvas.Children.Add(rectangle);
+                Canvas.SetTop(rectangle, 20);
+                Canvas.SetLeft(rectangle, (15 * task.TaskStart));
+            }
+           
+            foreach (Task task in Initializer.secondMachinePermuteResult[3])
+            {
+                Rectangle rectangle = new Rectangle()
+                {
+                    Width = (15 * task.TimeSpan) - 1,
+                    Height = 20,
+                    Fill = Brushes.Green,
+                    Stroke = Brushes.Red,
+                    StrokeThickness = 2,
+                };
+
+                canvas.Children.Add(rectangle);
+                Canvas.SetTop(rectangle, 20 + 40);
+                Canvas.SetLeft(rectangle, (15 * task.TaskStart));
             }
         }
+
+        
+
     }
 }

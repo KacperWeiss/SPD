@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Zad1.BackEnd
 {
-    class WorkCenter
+    public class WorkCenter
     {
         public List<Task> Tasks { get; set; }
 

@@ -20,9 +20,9 @@ namespace Zad1.BackEnd
             return TaskLists;
         }
 
-        public static void Swap<T>(this List<T> list, int index1, int index2)
+        public static void Swap<T>( this List<T> list, int index1, int index2)
         {
-            T tmp = list[index1];
+            T tmp =list[index1];
             list[index1] = list[index2];
             list[index2] = tmp;
         }
@@ -31,13 +31,19 @@ namespace Zad1.BackEnd
         {
             if (lowIt == highIt)
             {
-                TaskLists.Add(new List<Task>(tasks));
+                List<Task> newList = new List<Task>(tasks.Count);
+
+                tasks.ForEach((item) =>
+                {
+                    newList.Add(new Task(item));
+                });
+                TaskLists.Add(new List<Task>(newList));
             }
             else
             {
                 for (int i = lowIt; i <= highIt; i++)
                 {
-                    Swap(tasks, lowIt, i);
+                    Swap(tasks, lowIt, i);   
                     PermuteTasks(tasks, lowIt + 1, highIt);
                     Swap(tasks, lowIt, i);
                 }
