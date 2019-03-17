@@ -12,9 +12,17 @@ namespace Zad1.BackEnd
         {
             ID = iD;
             TimeSpan = timeSpan;
+            TaskStart = 0;
+        }
+        public Task(Task task) {
+            ID = task.ID;
+            TimeSpan = task.TimeSpan;
+            TaskStart = task.TaskStart;
         }
 
         public int ID { get; set; }
         public int TimeSpan { get; set; }
+        public int TaskStart { get; set; }
+        public int TaskStop { get; set; }
     }
 }

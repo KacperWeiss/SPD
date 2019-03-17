@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackEnd\MyPermute.cs" />
+    <Compile Include="BackEnd\Simulator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BackEnd\Task.cs" />

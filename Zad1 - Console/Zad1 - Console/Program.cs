@@ -10,21 +10,44 @@ namespace Zad1___Console
 {
     class Program
     {
-        static void Main(string[] args)
-        {
+        static void Main(string[] args) {
             string rawSetupString;
             string[] setupString;
             int numberOfTasks;
             int numberOfMachines;
+
             List<WorkCenter> workCenters = new List<WorkCenter>();
+            List<List<Task>> firstMachinePermuteResult = new List<List<Task>>();
+            List<List<Task>> secondMachinePermuteResult = new List<List<Task>>();
+
+            workCenters.Add(new WorkCenter(new List<Task>()));
+            workCenters.Add(new WorkCenter(new List<Task>()));
+            workCenters[0].Tasks.AddRange(new List<Task> {
+                new Task(1,2),
+                new Task(2,3),
+                new Task(3,8)
+                });
+            workCenters[1].Tasks.AddRange(new List<Task> {
+                new Task(1,1),
+                new Task(2,2),
+                new Task(3,5)
+                });
+
+            firstMachinePermuteResult = new List<List<Task>>(MyPermute.PermuteTasks(workCenters[0].Tasks));
+            MyPermute.TaskLists.Clear();
+            secondMachinePermuteResult = new List<List<Task>>(MyPermute.PermuteTasks(workCenters[1].Tasks));
+
+            Simulator.simulate(firstMachinePermuteResult, secondMachinePermuteResult);
+            Simulator.checkResults(firstMachinePermuteResult, secondMachinePermuteResult);
 
             // TODO: Stworzyć klasę scenario initializer
-            ObtainInitialScenarioInformation(out rawSetupString, out setupString, out numberOfTasks, out numberOfMachines); 
-            InitializeMachines(numberOfMachines, workCenters);
-            ObtainTaskInformationAndAssignThemToWorkCenters(ref rawSetupString, ref setupString, numberOfTasks, numberOfMachines, workCenters);
+            //ObtainInitialScenarioInformation(out rawSetupString, out setupString, out numberOfTasks, out numberOfMachines); 
+            //InitializeMachines(numberOfMachines, workCenters);
+            //ObtainTaskInformationAndAssignThemToWorkCenters(ref rawSetupString, ref setupString, numberOfTasks, numberOfMachines, workCenters);
 
 
         }
+
 
         private static void ObtainTaskInformationAndAssignThemToWorkCenters(ref string rawSetupString, ref string[] setupString, int numberOfTasks, int numberOfMachines, List<WorkCenter> workCenters)
         {
