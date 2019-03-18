@@ -27,6 +27,22 @@
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="42.2" VerticalAlignment="Top" Width="78.953" Margin="5,5,0,0" Padding="5,0" Grid.Row="2" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
             <Label Content="Machine2" HorizontalAlignment="Right" Margin="0,4,5,4" VerticalAlignment="Center" Height="32.2" Width="65"/>
         </Border>
-
+        <ToolBarTray Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="31.147" VerticalAlignment="Top" Margin="93.951,0,0,0">
+            <ToolBar Width="297.28">
+                <Button x:Name="loadFileBtn" Click="LoadFileBtn_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="loadFileText" Margin="3,0,0,0">Load File</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Separator />
+                <Label RenderTransformOrigin="1.19,0.701">Switch Permutation:</Label>
+                <ComboBox>
+                    <ComboBoxItem IsSelected="True">Permutation1</ComboBoxItem>
+                    <ComboBoxItem>Permutation2</ComboBoxItem>
+                    <ComboBoxItem>Permutation3</ComboBoxItem>
+                    <ComboBoxItem>Permutation4</ComboBoxItem>
+                </ComboBox>
+            </ToolBar>
+        </ToolBarTray>
     </Grid>
 </Window>

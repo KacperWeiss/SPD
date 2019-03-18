@@ -28,15 +28,13 @@ namespace Zad1.BackEnd
                 });
         }
 
-        public static int simulation()
+        public static void simulation()
         {
             firstMachinePermuteResult = new List<List<Task>>(MyPermute.PermuteTasks(Initializer.workCenters[0].Tasks));
             MyPermute.TaskLists.Clear();
             secondMachinePermuteResult = new List<List<Task>>(MyPermute.PermuteTasks(Initializer.workCenters[1].Tasks));
-            int taskShifter = 0;
-            int machineShifter = 0;
+            
             Simulator.simulate(firstMachinePermuteResult, secondMachinePermuteResult);
-            return taskShifter;
         }
 
     }
