@@ -14,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Zad1.BackEnd;
 using Task = Zad1.BackEnd.Task;
-using System;
 using System.IO;
 using Microsoft.Win32;
 
@@ -43,7 +42,7 @@ namespace Zad1
             {
                 Rectangle rectangle = new Rectangle()
                 {
-                    Width = (15 * task.TimeSpan) - 1,
+                    Width = (30 * task.TimeSpan) - 1,
                     Height = 20,
                     Fill = Brushes.Green,
                     Stroke = Brushes.Red,
@@ -52,14 +51,14 @@ namespace Zad1
 
                 canvas.Children.Add(rectangle);
                 Canvas.SetTop(rectangle, 10);
-                Canvas.SetLeft(rectangle, (15 * task.TaskStart));
+                Canvas.SetLeft(rectangle, (30 * task.TaskStart));
             }
            
             foreach (Task task in Initializer.secondMachinePermuteResult[3])
             {
                 Rectangle rectangle = new Rectangle()
                 {
-                    Width = (15 * task.TimeSpan) - 1,
+                    Width = (30 * task.TimeSpan) - 1,
                     Height = 20,
                     Fill = Brushes.Green,
                     Stroke = Brushes.Red,
@@ -68,7 +67,7 @@ namespace Zad1
 
                 canvas.Children.Add(rectangle);
                 Canvas.SetTop(rectangle, 20 + 50);
-                Canvas.SetLeft(rectangle, (15 * task.TaskStart));
+                Canvas.SetLeft(rectangle, (30 * task.TaskStart));
             }
         }
 
@@ -92,8 +91,7 @@ namespace Zad1
                     using (StreamReader sr = new StreamReader(open.FileName))
                     {
                         // Read the stream to a string, and write the string to the console.
-                        String line = sr.ReadToEnd();
-                        Console.WriteLine(line);
+                        String line = sr.ReadToEnd();  
                     }
                 }
                 catch (FileNotFoundException ex)
@@ -102,6 +100,11 @@ namespace Zad1
                 }
             }
             
+        }
+
+        private void SwitchPermutation_Click(object sender, RoutedEventArgs e)
+        {
+            window.Content = new PermutationPage();
         }
     }
 }
