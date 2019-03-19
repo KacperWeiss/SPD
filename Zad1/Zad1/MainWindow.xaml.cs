@@ -37,48 +37,10 @@ namespace Zad1
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
             Initializer.simulation();
-
-            foreach (Task task in Initializer.firstMachinePermuteResult[3])
-            {
-                Rectangle rectangle = new Rectangle()
-                {
-                    Width = (30 * task.TimeSpan) - 1,
-                    Height = 20,
-                    Fill = Brushes.Green,
-                    Stroke = Brushes.Red,
-                    StrokeThickness = 2,
-                };
-
-                canvas.Children.Add(rectangle);
-                Canvas.SetTop(rectangle, 10);
-                Canvas.SetLeft(rectangle, (30 * task.TaskStart));
-            }
-           
-            foreach (Task task in Initializer.secondMachinePermuteResult[3])
-            {
-                Rectangle rectangle = new Rectangle()
-                {
-                    Width = (30 * task.TimeSpan) - 1,
-                    Height = 20,
-                    Fill = Brushes.Green,
-                    Stroke = Brushes.Red,
-                    StrokeThickness = 2,
-                };
-
-                canvas.Children.Add(rectangle);
-                Canvas.SetTop(rectangle, 20 + 50);
-                Canvas.SetLeft(rectangle, (30 * task.TaskStart));
-            }
+            GUI.drawGUI(window);
+            GUI.switchPage(1);
         }
 
-        private void OpenBtn_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Controls.Primitives.Popup popup = sender as System.Windows.Controls.Primitives.Popup;
-            if(popup != null)
-            {
-                popup.IsOpen = false;
-            }
-        }
         private void LoadFileBtn_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog open = new OpenFileDialog();
@@ -102,9 +64,9 @@ namespace Zad1
             
         }
 
-        private void SwitchPermutation_Click(object sender, RoutedEventArgs e)
-        {
-            window.Content = new PermutationPage();
+        private void PermutationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {     
+                window.Content = GUI.permutationPages[permutationComboBox.SelectedIndex];
         }
     }
 }

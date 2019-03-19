@@ -63,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BackEnd\GUI.cs" />
     <Compile Include="BackEnd\Initializer.cs" />
     <Compile Include="BackEnd\MyPermute.cs" />
     <Compile Include="BackEnd\Simulator.cs" />

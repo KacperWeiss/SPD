@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Background="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}">
 
-    <TabControl Grid.Column="3" Grid.RowSpan="3">
-        <TabItem Header="Main Menu">
+    <TabControl Name="tabs"  Grid.Column="3" Grid.RowSpan="3">
+        <TabItem Name="menuTab" Header="Main Menu">
             <Grid Background="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}">
                 <Grid.RowDefinitions>
                     <RowDefinition MinHeight="47" Height="28*"/>
@@ -34,18 +34,14 @@
                         <Separator />
                         <Label RenderTransformOrigin="1.19,0.701">Switch Permutation:</Label>
                         <ComboBox>
-                            <ComboBoxItem IsSelected="True">Permutation1</ComboBoxItem>
-                            <ComboBoxItem>Permutation2</ComboBoxItem>
-                            <ComboBoxItem>Permutation3</ComboBoxItem>
-                            <ComboBoxItem>Permutation4</ComboBoxItem>
                         </ComboBox>
                     </ToolBar>
                 </ToolBarTray>
             </Grid>
         </TabItem>
-        <TabItem Header="Przeglad Zupelny">
+        <TabItem Name="przegladTab" Header="Przeglad Zupelny">
 
-            <Grid Background="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}">
+            <Grid Name="przegladGrid" Background="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}">
                 <Grid.RowDefinitions>
                     <RowDefinition MinHeight="47" Height="47*"/>
                     <RowDefinition Height="34*"/>
@@ -61,15 +57,11 @@
                     <ColumnDefinition Width="0*"/>
                     <ColumnDefinition Width="128*"/>
                 </Grid.ColumnDefinitions>
-                <ToolBarTray HorizontalAlignment="Left" Height="31.147" VerticalAlignment="Top" Margin="0.709,0,0,0" Grid.ColumnSpan="3" Width="243">
-                    <ToolBar Width="243">
+                <ToolBarTray Name="przegladToolbarTray" HorizontalAlignment="Left" Height="31.147" VerticalAlignment="Top" Margin="0.709,0,0,0" Grid.ColumnSpan="3" Width="243">
+                    <ToolBar Name="przegladToolbar" Width="243">
                         <Separator />
                         <Label RenderTransformOrigin="1.19,0.701">Switch Permutation:</Label>
-                        <ComboBox x:Name="permutationComboBox">
-                            <ComboBoxItem IsSelected="True">Permutation1</ComboBoxItem>
-                            <ComboBoxItem>Permutation2</ComboBoxItem>
-                            <ComboBoxItem>Permutation3</ComboBoxItem>
-                            <ComboBoxItem>Permutation4</ComboBoxItem>
+                        <ComboBox x:Name="permutationComboBox" SelectionChanged="PermutationComboBox_SelectionChanged">
                         </ComboBox>
                     </ToolBar>
                 </ToolBarTray>
@@ -80,7 +72,6 @@
                 <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="42.2" VerticalAlignment="Top" Width="78.953" Margin="5,5,0,0" Padding="5,0" Grid.Row="3" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
                     <Label Content="Machine2" HorizontalAlignment="Right" Margin="0,4,5,4" VerticalAlignment="Center" Height="32.2" Width="65"/>
                 </Border>
-                <Button x:Name="switchPermutation" Content="Next page" Grid.Column="4" HorizontalAlignment="Left" Margin="46.816,14.834,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Click="SwitchPermutation_Click" Height="19.96"/>
                 <Canvas x:Name="timespanCanvas" HorizontalAlignment="Left" Height="29.803" VerticalAlignment="Top" Width="477.4" RenderTransformOrigin="2.74,0.83" Grid.Column="2" Margin="0.6,0,0,0" Grid.Row="1">
                     <Label Content=" 1" Width="30" Background="White" Height="29.803" FontSize="16"/>
                     <Label Content=" 2" Width="30" Background="White" Height="29.803" FontSize="16" Canvas.Left="30"/>
@@ -104,7 +95,7 @@
             </Grid>
         </TabItem>
 
-        <TabItem Header="Algorytm Johnson'a">
+        <TabItem Name="johnsonTab" Header="Algorytm Johnson'a">
             <Grid Background="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}">
                 <Grid.RowDefinitions>
                     <RowDefinition MinHeight="47" Height="47*"/>
@@ -125,10 +116,6 @@
                         <Separator />
                         <Label RenderTransformOrigin="1.19,0.701">Switch Permutation:</Label>
                         <ComboBox x:Name="permutationCombox2">
-                            <ComboBoxItem IsSelected="True">Permutation1</ComboBoxItem>
-                            <ComboBoxItem>Permutation2</ComboBoxItem>
-                            <ComboBoxItem>Permutation3</ComboBoxItem>
-                            <ComboBoxItem>Permutation4</ComboBoxItem>
                         </ComboBox>
                     </ToolBar>
                 </ToolBarTray>
