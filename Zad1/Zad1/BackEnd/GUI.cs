@@ -189,6 +189,7 @@ namespace Zad1.BackEnd
                     //window.canvas.Children.Add(rectangle);
                     Canvas.SetTop(rectangles.Last(), 10 + 60);
                     Canvas.SetLeft(rectangles.Last(), (25 * task.TaskStart));
+                    permutationPages[currentIterator].CMaxValue.Content = Initializer.secondMachinePermuteResult[currentIterator].Last().TaskStop;
                 }
             }
             drawJohnon(window);
