@@ -31,18 +31,18 @@ namespace Zad1.BackEnd
  
                 foreach (Task task in taskList)
                 {
-                    Rectangle rectangle = new Rectangle()
+                    rectangles.Add(new Rectangle()
                     {
                         Width = (30 * task.TimeSpan) - 1,
                         Height = 20,
                         Fill = Brushes.Green,
                         Stroke = Brushes.Red,
                         StrokeThickness = 2,
-                    };
-                    permutationPages[permutationPages.Count()-1].canvas.Children.Add(rectangle);
+                    });
+                    permutationPages[permutationPages.Count()-1].canvas.Children.Add(rectangles.Last());
 
-                    Canvas.SetTop(rectangle, 10);
-                    Canvas.SetLeft(rectangle, (30 * task.TaskStart));
+                    Canvas.SetTop(rectangles.Last(), 10);
+                    Canvas.SetLeft(rectangles.Last(), (30 * task.TaskStart));
                 }
                 
             }
@@ -61,19 +61,19 @@ namespace Zad1.BackEnd
  
                 foreach (Task task in taskList)
                 {
-                    Rectangle rectangle = new Rectangle()
+                    rectangles.Add(new Rectangle()
                     {
                         Width = (30 * task.TimeSpan) - 1,
                         Height = 20,
                         Fill = Brushes.Green,
                         Stroke = Brushes.Red,
                         StrokeThickness = 2,
-                    };
-                    permutationPages[currentIterator].canvas.Children.Add(rectangle);
+                    });
+                    permutationPages[currentIterator].canvas.Children.Add(rectangles.Last());
 
                     //window.canvas.Children.Add(rectangle);
-                    Canvas.SetTop(rectangle, 10 + 50);
-                    Canvas.SetLeft(rectangle, (30 * task.TaskStart));
+                    Canvas.SetTop(rectangles.Last(), 10 + 50);
+                    Canvas.SetLeft(rectangles.Last(), (30 * task.TaskStart));
                 }
             }  
         }
@@ -90,6 +90,15 @@ namespace Zad1.BackEnd
 
             mainWindow.Content = permutationPages[0];
             tabControl.SelectedItem = tabControl.Items[newDefaultTab];
+        }
+
+        public static void clearSimulation()
+        {
+            rectangles.Clear();
+            Initializer.firstMachinePermuteResult.Clear();
+            Initializer.secondMachinePermuteResult.Clear();
+            Initializer.workCenters.Clear();
+            permutationPages.Clear();
         }
     }
 }

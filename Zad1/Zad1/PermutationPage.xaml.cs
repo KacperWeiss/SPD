@@ -65,8 +65,19 @@ namespace Zad1
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
+            Initializer.initialize();
             Initializer.simulation();
-           // GUI.drawGUI(Application.Current.MainWindow);
+            GUI.drawGUI(GUI.mainWindow);
+            GUI.switchPage(1);
+        }
+
+        private void ClearBtn_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (PermutationPage page in GUI.permutationPages)
+            {
+                page.canvas.Children.Clear();
+            }
+            GUI.clearSimulation();
         }
     }
 }

@@ -38,6 +38,7 @@
                         </ComboBox>
                     </ToolBar>
                 </ToolBarTray>
+                <Button x:Name="clearBtn" Content="Clear Simulation" Grid.Column="2" HorizontalAlignment="Left" Height="25" Margin="10,10,0,0" Grid.Row="3" VerticalAlignment="Top" Width="96" Background="#FFDDA2A2" Click="ClearBtn_Click"/>
             </Grid>
         </TabItem>
         <TabItem Name="przegladTab" Header="Przeglad Zupelny">
@@ -94,6 +95,6 @@
                 </Canvas>
             </Grid>
         </TabItem>
-        
+
     </TabControl>
 </Page>

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using MathNet.Numerics;
+using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace Zad1.BackEnd {
     static class Simulator {
@@ -17,10 +18,13 @@ namespace Zad1.BackEnd {
         //add Johnson's algorithm
 
         public static void simulate(List<List<Task>> firstMachinePermuteResult, List<List<Task>> secondMachinePermuteResult) {
+            //double numberOfPermutations = SpecialFunctions.Factorial(firstMachinePermuteResult[0].Count());
+            int numberOfPermutations = firstMachinePermuteResult.Count();
+            int numberOfTasks = firstMachinePermuteResult[0].Count();
 
-            for (int j = 0; j < 6; j++)
+            for (int j = 0; j < numberOfPermutations; j++)
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < numberOfTasks; i++)
                 {
 
                     if (i == 0)
