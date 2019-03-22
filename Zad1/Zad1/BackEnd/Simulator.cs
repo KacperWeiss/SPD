@@ -13,11 +13,11 @@ namespace Zad1.BackEnd {
         static int taskStart;
         static int taskStop = 0;
 
-        //TODO: enable simulations with a given number of machines
-        //also calculate maximum and minimum timespan for a set of permutations
+        //TODO: calculate maximum and minimum timespan for a set of permutations
         //add Johnson's algorithm
 
-        public static void simulate(List<List<Task>> firstMachinePermuteResult, List<List<Task>> secondMachinePermuteResult) {
+        public static void simulateFullSearch(List<List<Task>> firstMachinePermuteResult, List<List<Task>> secondMachinePermuteResult) {
+          
             //double numberOfPermutations = SpecialFunctions.Factorial(firstMachinePermuteResult[0].Count());
             int numberOfPermutations = firstMachinePermuteResult.Count();
             int numberOfTasks = firstMachinePermuteResult[0].Count();
@@ -46,21 +46,71 @@ namespace Zad1.BackEnd {
 
                         secondMachinePermuteResult[j][i].TaskStart = firstMachinePermuteResult[j][i].TaskStop;
                         secondMachinePermuteResult[j][i].TaskStop = secondMachinePermuteResult[j][i].TaskStart + secondMachinePermuteResult[j][i].TimeSpan;
-                        //if (firstMachinePermuteResult[j][i].TaskStop >= secondMachinePermuteResult[j][i].TaskStop)
-                        //{
-                        //    secondMachinePermuteResult[j][i].TaskStart = firstMachinePermuteResult[j][i].TaskStop;
-                        //    secondMachinePermuteResult[j][i].TaskStop = secondMachinePermuteResult[j][i].TaskStart + secondMachinePermuteResult[j][i].TimeSpan;
-                        //}
+                        
                          if ((firstMachinePermuteResult[j][i].TaskStop < secondMachinePermuteResult[j][i -1].TaskStop))
-                        {
+                         {
                             secondMachinePermuteResult[j][i].TaskStart = secondMachinePermuteResult[j][i - 1].TaskStop;
                             secondMachinePermuteResult[j][i].TaskStop = secondMachinePermuteResult[j][i].TaskStart + secondMachinePermuteResult[j][i].TimeSpan;
-                        }
+                         }
                     }
-
-
                 }
             }
+        }
+
+        public static List<Task> simulateJohnson(List<WorkCenter> workCenters)
+        {
+            
+            int min = 10000;
+            int minTaskIndex = 0;
+            int minMachineIndex = 0;
+            List<Task> allTasks = new List<Task>();
+            List<Task> taskSequenceM1 = new List<Task>();
+            List<Task> taskSequenceM2 = new List<Task>();
+
+            List<WorkCenter> localWorkCenter = workCenters.ConvertAll(workCenter => new WorkCenter(workCenter.Tasks));     
+
+            bool tasksLeft = true;
+            while(tasksLeft)
+            {
+                tasksLeft = false;
+                foreach (WorkCenter machine in localWorkCenter)
+                {
+                    
+
+                    foreach (Task task in machine.Tasks)
+                    {  
+                        if (task.TimeSpan <= min) ////////////////////////
+                        {
+                            min = task.TimeSpan;
+                            minTaskIndex = machine.Tasks.IndexOf(task);
+                            minMachineIndex = localWorkCenter.IndexOf(machine);
+                        }
+                        //TODO: what if they are equal
+                    }
+                }
+
+                if (minMachineIndex == 0 && localWorkCenter[minMachineIndex].Tasks.Any())
+                {
+                    taskSequenceM1.Add(localWorkCenter[minMachineIndex].Tasks[minTaskIndex]);
+                    localWorkCenter[0].Tasks.RemoveAt(minTaskIndex);
+                    localWorkCenter[1].Tasks.RemoveAt(minTaskIndex);
+                }
+                else if (minMachineIndex == 1 && localWorkCenter[minMachineIndex].Tasks.Any())
+                {
+                    taskSequenceM2.Insert(0, localWorkCenter[minMachineIndex].Tasks[minTaskIndex]);
+                    localWorkCenter[0].Tasks.RemoveAt(minTaskIndex);
+                    localWorkCenter[1].Tasks.RemoveAt(minTaskIndex);
+                }
+                if (localWorkCenter[minMachineIndex].Tasks.Any())
+                    {
+                        tasksLeft = true;
+                    }
+                    min = 10000;
+            }
+
+            taskSequenceM1.AddRange(taskSequenceM2);
+            
+            return taskSequenceM1;
         }
 
         public static void checkResults(List<List<Task>> firstMachinePermuteResult, List<List<Task>> secondMachinePermuteResult) {

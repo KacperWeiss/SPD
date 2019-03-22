@@ -28,7 +28,19 @@ namespace Zad1.BackEnd
                 new Task(3,5)
                 });
         }
+        public static void initializeFromFile(int numberOfTasks, int numberOfMachines, List<List<int>> parsedTasks)
+        {
+            for (int i = 0; i < numberOfMachines; i++)
+            {
+                workCenters.Add(new WorkCenter(new List<Task>()));
 
+                for (int j = 0; j < numberOfTasks; j++)
+                {
+                    workCenters[i].Tasks.Add(new Task(j, parsedTasks[i][j]));
+                }
+            }
+            
+        }
         public static void simulation()
         {
             firstMachinePermuteResult = new List<List<Task>>(MyPermute.PermuteTasks(workCenters[0].Tasks));
@@ -36,7 +48,7 @@ namespace Zad1.BackEnd
             secondMachinePermuteResult = new List<List<Task>>(MyPermute.PermuteTasks(workCenters[1].Tasks));
             MyPermute.TaskLists.Clear();
 
-            Simulator.simulate(firstMachinePermuteResult, secondMachinePermuteResult);
+            Simulator.simulateFullSearch(firstMachinePermuteResult, secondMachinePermuteResult);
         }
 
     }

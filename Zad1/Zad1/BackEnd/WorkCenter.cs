@@ -10,9 +10,18 @@ namespace Zad1.BackEnd
     {
         public List<Task> Tasks { get; set; }
 
-        public WorkCenter(List<Task> tasks)
+        //public WorkCenter(List<Task> tasks)
+        //{
+        //    Tasks = tasks;
+        //}
+        public WorkCenter(List<Task> taskList)
         {
-            Tasks = tasks;
+            Tasks = new List<Task>(taskList.Count);
+
+            taskList.ForEach((item) =>
+            {
+                Tasks.Add(new Task(item));
+            });
         }
     }
 }

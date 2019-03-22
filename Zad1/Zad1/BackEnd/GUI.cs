@@ -14,7 +14,121 @@ namespace Zad1.BackEnd
     {
         public static List<PermutationPage> permutationPages = new List<PermutationPage>();
         public static MainWindow mainWindow;
+
         public static List<Rectangle> rectangles = new List<Rectangle>();
+        public static List<Rectangle> rectanglesJohnson = new List<Rectangle>();
+
+        public static List<Task> firstMachineJohnson = new List<Task>();
+        public static List<Task> secondMachineJohnson = new List<Task>();
+
+
+
+        public static int indexOfTask(int IDvalue, List<Task> tasks)
+        {
+            foreach(Task task in tasks)
+            {
+                if(task.ID == IDvalue)
+                {
+                    return tasks.IndexOf(task);
+                }
+            }
+            return -1;
+        }
+
+        public static void drawJohnon(MainWindow window)
+        {
+            mainWindow = window;
+            int taskTimeSpan;
+            int taskID;
+            int taskStart;
+            int taskStop = 0;
+           
+            List<Task> johnsonOutput = new List<Task>(Simulator.simulateJohnson(Initializer.workCenters)); 
+
+            foreach (Task task in johnsonOutput)
+            {
+                int timespan = Initializer.workCenters[0].Tasks[indexOfTask(task.ID, Initializer.workCenters[0].Tasks)].TimeSpan;
+                int timespan2 = Initializer.workCenters[1].Tasks[indexOfTask(task.ID, Initializer.workCenters[1].Tasks)].TimeSpan;
+                firstMachineJohnson.Add(new Task(task.ID, timespan));
+                secondMachineJohnson.Add(new Task(task.ID, timespan2));
+            }
+
+            
+            for (int i = 0; i < johnsonOutput.Count ; i++)
+            {
+
+                if (i == 0)
+                {
+                    taskTimeSpan = firstMachineJohnson[i].TimeSpan;
+                    taskID = firstMachineJohnson[i].ID;
+                    taskStart = 0;
+                    taskStop = taskTimeSpan + taskStart;
+                    firstMachineJohnson[i].TaskStop = taskStop;
+                    secondMachineJohnson[i].TaskStart = taskStop;
+                    secondMachineJohnson[i].TaskStop = taskStop + secondMachineJohnson[i].TimeSpan;
+                }
+                else
+                {
+                    taskStart = taskStop;
+                    firstMachineJohnson[i].TaskStart = taskStart;
+                    taskStop = taskStart + firstMachineJohnson[i].TimeSpan;
+                    firstMachineJohnson[i].TaskStop = taskStop;
+
+                    secondMachineJohnson[i].TaskStart = firstMachineJohnson[i].TaskStop;
+                    secondMachineJohnson[i].TaskStop = secondMachineJohnson[i].TaskStart + secondMachineJohnson[i].TimeSpan;
+
+                    if ((firstMachineJohnson[i].TaskStop < secondMachineJohnson[i - 1].TaskStop))
+                    {
+                        secondMachineJohnson[i].TaskStart = secondMachineJohnson[i - 1].TaskStop;
+                        secondMachineJohnson[i].TaskStop = secondMachineJohnson[i].TaskStart + secondMachineJohnson[i].TimeSpan;
+                    }
+                }
+
+
+            }
+            permutationPages.Add(new PermutationPage());
+            foreach (Task task in firstMachineJohnson)
+            {
+                
+                rectanglesJohnson.Add(new Rectangle()
+                {
+                    Width = (25 * task.TimeSpan) - 1,
+                    Height = 20,
+                    Fill = Brushes.Green,
+                    Stroke = Brushes.Red,
+                    StrokeThickness = 2,
+                });
+                permutationPages[permutationPages.Count() - 1].canvas2.Children.Add(rectanglesJohnson.Last());
+
+                Canvas.SetTop(rectanglesJohnson.Last(), 10);
+                Canvas.SetLeft(rectanglesJohnson.Last(), (25 * task.TaskStart));
+                
+            }
+
+            foreach (Task task in secondMachineJohnson)
+            {
+                rectanglesJohnson.Add(new Rectangle()
+                {
+                    Width = (25 * task.TimeSpan) - 1,
+                    Height = 20,
+                    Fill = Brushes.Green,
+                    Stroke = Brushes.Red,
+                    StrokeThickness = 2,
+                });
+                permutationPages[permutationPages.Count() -1].canvas2.Children.Add(rectanglesJohnson.Last());
+
+                Canvas.SetTop(rectanglesJohnson.Last(), 10 +60);
+                Canvas.SetLeft(rectanglesJohnson.Last(), (25 * task.TaskStart));
+            }
+
+            foreach (PermutationPage permPage in permutationPages)
+            {      
+                    permPage.permutationComboBox.Items.Add("JOHNSON!!!");
+                    permPage.permutationComboBox2.Items.Add("JOHNSON!!!");
+            }
+
+        }
+
 
         public static void drawGUI(MainWindow window)
         {
@@ -33,7 +147,7 @@ namespace Zad1.BackEnd
                 {
                     rectangles.Add(new Rectangle()
                     {
-                        Width = (30 * task.TimeSpan) - 1,
+                        Width = (25 * task.TimeSpan) - 1,
                         Height = 20,
                         Fill = Brushes.Green,
                         Stroke = Brushes.Red,
@@ -42,16 +156,17 @@ namespace Zad1.BackEnd
                     permutationPages[permutationPages.Count()-1].canvas.Children.Add(rectangles.Last());
 
                     Canvas.SetTop(rectangles.Last(), 10);
-                    Canvas.SetLeft(rectangles.Last(), (30 * task.TaskStart));
+                    Canvas.SetLeft(rectangles.Last(), (25 * task.TaskStart));
                 }
                 
             }
 
             foreach (PermutationPage permPage in permutationPages)
             {
-                for (int i = 0; i < permutationPages.Count - 1; i++)
+                for (int i = 0; i < permutationPages.Count /*- 1*/; i++)
                 {
                     permPage.permutationComboBox.Items.Add("permutation " + i);
+                    permPage.permutationComboBox2.Items.Add("permutation " + i);
                 }
             }
 
@@ -63,7 +178,7 @@ namespace Zad1.BackEnd
                 {
                     rectangles.Add(new Rectangle()
                     {
-                        Width = (30 * task.TimeSpan) - 1,
+                        Width = (25 * task.TimeSpan) - 1,
                         Height = 20,
                         Fill = Brushes.Green,
                         Stroke = Brushes.Red,
@@ -72,10 +187,11 @@ namespace Zad1.BackEnd
                     permutationPages[currentIterator].canvas.Children.Add(rectangles.Last());
 
                     //window.canvas.Children.Add(rectangle);
-                    Canvas.SetTop(rectangles.Last(), 10 + 50);
-                    Canvas.SetLeft(rectangles.Last(), (30 * task.TaskStart));
+                    Canvas.SetTop(rectangles.Last(), 10 + 60);
+                    Canvas.SetLeft(rectangles.Last(), (25 * task.TaskStart));
                 }
-            }  
+            }
+            drawJohnon(window);
         }
 
         public static void switchPage(int selectedIndex, int newDefaultTab)
@@ -94,11 +210,23 @@ namespace Zad1.BackEnd
 
         public static void clearSimulation()
         {
+            //clearing johnson
             rectangles.Clear();
+            rectanglesJohnson.Clear();
+            firstMachineJohnson.Clear();
+            secondMachineJohnson.Clear();
+
+            //clearing Full Search
             Initializer.firstMachinePermuteResult.Clear();
             Initializer.secondMachinePermuteResult.Clear();
             Initializer.workCenters.Clear();
-            permutationPages.Clear();
+            foreach(PermutationPage page in permutationPages)
+            {
+                page.permutationComboBox.Items.Clear();
+                page.permutationComboBox2.Items.Clear();
+            }
+            
+            permutationPages.Clear();   
         }
     }
 }
