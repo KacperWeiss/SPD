@@ -62,7 +62,7 @@ namespace Zad1.BackEnd {
         {
             //Stworzyc listę tasków totalWorkSpanPerTask, gdzie timeSpan zadania jest sumą wszystkich jego timeSpanów dla każdego workCentera np:
             List<Task> totalWorkSpanPerTask = new List<Task>(workCenters[0].Tasks);
-            for(int i = 1; i < workCenters.Count; i++)
+            for (int i = 1; i < workCenters.Count; i++)
             {
                 for (int j = 0; j < workCenters[i].Tasks.Count; j++)
                 {
@@ -73,9 +73,46 @@ namespace Zad1.BackEnd {
             //Posortować "descending"
             List<Task> SortedWorkSpanList = totalWorkSpanPerTask.OrderBy(o => o.TimeSpan).ToList();
             SortedWorkSpanList.Reverse();
-            
 
+            //Bazując na ID Tasków z tej listy dodawać do wirtualnych workcenterów pokolei po jednym tasku
+            //następnie umieszczając dodany task na każdej z możliwych pozycji symulować działanie maszyn dla takiego zestawu tasków
+            //Wybrać zestaw z najlepszym Cmax (TaskStop ostatniego zadania w ostatniej maszynie)
+            //Powtórzyć aż ilość tasków w wirtualnych work centerach będzie równa ilości tasków
+
+            List<WorkCenter> simulatedWorkCenters = new List<WorkCenter>(workCenters.Count);
+            addAnotherTaskToSimulation(workCenters, SortedWorkSpanList, simulatedWorkCenters);
+            #region addAnotherTaskToSimulation wytłumaczenie
+            //if (simulatedWorkCenters[0].Tasks.Count != workCenters[0].Tasks.Count)
+            //{
+            //    int currentID = SortedWorkSpanList.First().ID;
+            //    for (int i = 0; i < workCenters.Count; i++)
+            //    {
+            //        simulatedWorkCenters[i].Tasks.Add(new Task(workCenters[i].Tasks.SingleOrDefault(o => o.ID == currentID)));
+            //    }
+            //    SortedWorkSpanList.Remove(SortedWorkSpanList.Single(o => o.ID == currentID));
+            //}
+            #endregion
+            //symulacja wyników, swapująć kolejno taska aż pokona drogę od końca, do początku, zapisanie sekwencji dla której wychodzi to najlepiej
+            //Zapisanie do simulatedWorkCenters najlepszej sekwencji i powtórzenie działania(można wrzucić do while'a porównującego co samo, co ma if w obecnej metodzie addAnotherTaskToSimulation)
+
+
+            //Opcjonalnie zrobić sytuacje gdy totalWorkSpan jest taki sam dla większej ilości zadań, ale to zostawimy na później
+
+            //Zwrócić optymalną listę tasków
             return new List<Task>();
+        }
+
+        private static void addAnotherTaskToSimulation(List<WorkCenter> workCenters, List<Task> SortedWorkSpanList, List<WorkCenter> simulatedWorkCenters)
+        {
+            if (simulatedWorkCenters[0].Tasks.Count != workCenters[0].Tasks.Count)
+            {
+                int currentID = SortedWorkSpanList.First().ID;
+                for (int i = 0; i < workCenters.Count; i++)
+                {
+                    simulatedWorkCenters[i].Tasks.Add(new Task(workCenters[i].Tasks.SingleOrDefault(o => o.ID == currentID)));
+                }
+                SortedWorkSpanList.Remove(SortedWorkSpanList.Single(o => o.ID == currentID));
+            }
         }
 
         public static List<Task> simulateJohnson(List<WorkCenter> workCenters)
