@@ -58,6 +58,26 @@ namespace Zad1.BackEnd {
             }
         }
 
+        public static List<Task> simulateNEH(List<WorkCenter> workCenters)
+        {
+            //Stworzyc listę tasków totalWorkSpanPerTask, gdzie timeSpan zadania jest sumą wszystkich jego timeSpanów dla każdego workCentera np:
+            List<Task> totalWorkSpanPerTask = new List<Task>(workCenters[0].Tasks);
+            for(int i = 1; i < workCenters.Count; i++)
+            {
+                for (int j = 0; j < workCenters[i].Tasks.Count; j++)
+                {
+                    totalWorkSpanPerTask[j].TimeSpan += workCenters[i].Tasks[j].TimeSpan;
+                }
+            }
+
+            //Posortować "descending"
+            List<Task> SortedWorkSpanList = totalWorkSpanPerTask.OrderBy(o => o.TimeSpan).ToList();
+            SortedWorkSpanList.Reverse();
+            
+
+            return new List<Task>();
+        }
+
         public static List<Task> simulateJohnson(List<WorkCenter> workCenters)
         {
             
