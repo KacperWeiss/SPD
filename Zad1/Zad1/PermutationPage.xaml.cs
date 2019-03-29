@@ -122,5 +122,25 @@ namespace Zad1
             }
             GUI.clearSimulation();
         }
+
+        private void PermutationComboBox2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (permutationComboBox2.SelectedItem != null)
+            {
+                GUI.switchPage(permutationComboBox2.SelectedIndex, 1);
+                //Dispatcher.BeginInvoke((Action)(() => permutationComboBox.SelectedItem = null));
+                permutationComboBox2.SelectedItem = null;
+            }
+        }
+
+        private void PermutationComboBoxNEH_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (permutationComboBoxNEH.SelectedItem != null)
+            {
+                GUI.switchPage(permutationComboBoxNEH.SelectedIndex, 1);
+                //Dispatcher.BeginInvoke((Action)(() => permutationComboBox.SelectedItem = null));
+                permutationComboBoxNEH.SelectedItem = null;
+            }
+        }
     }
 }

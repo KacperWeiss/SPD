@@ -9,7 +9,7 @@ namespace Zad1.BackEnd
 {
     public static class Initializer 
     {
-         public static List<WorkCenter> workCenters = new List<WorkCenter>();
+        public static List<WorkCenter> workCenters = new List<WorkCenter>();
         public static List<List<Task>> firstMachinePermuteResult = new List<List<Task>>();
         public static List<List<Task>> secondMachinePermuteResult = new List<List<Task>>();
 
@@ -49,6 +49,7 @@ namespace Zad1.BackEnd
             MyPermute.TaskLists.Clear();
 
             Simulator.simulateFullSearch(firstMachinePermuteResult, secondMachinePermuteResult);
+            Simulator.simulateNEH(workCenters);
         }
 
     }

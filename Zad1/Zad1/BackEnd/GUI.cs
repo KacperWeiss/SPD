@@ -17,10 +17,10 @@ namespace Zad1.BackEnd
 
         public static List<Rectangle> rectangles = new List<Rectangle>();
         public static List<Rectangle> rectanglesJohnson = new List<Rectangle>();
+        public static List<Rectangle> rectanglesNEH = new List<Rectangle>();
 
         public static List<Task> firstMachineJohnson = new List<Task>();
         public static List<Task> secondMachineJohnson = new List<Task>();
-
 
 
         public static int indexOfTask(int IDvalue, List<Task> tasks)
@@ -34,6 +34,44 @@ namespace Zad1.BackEnd
             }
             return -1;
         }
+
+
+        public static void drawNEH()
+        {
+            permutationPages.Add(new PermutationPage());
+            for(int i = 0; i < Simulator.machineNEH.Count; i++)
+            {
+                foreach (Task task in Simulator.machineNEH[i])
+                {
+
+                    rectanglesNEH.Add(new Rectangle()
+                    {
+                        Width = (25 * task.TimeSpan) - 1,
+                        Height = 20,
+                        Fill = Brushes.Green,
+                        Stroke = Brushes.Red,
+                        StrokeThickness = 2,
+                    });
+                    permutationPages[permutationPages.Count() - 1].canvasNEH.Children.Add(rectanglesNEH.Last());
+
+                    Canvas.SetTop(rectanglesNEH.Last(), 10 + i *60);
+                    Canvas.SetLeft(rectanglesNEH.Last(), (25 * task.TaskStart));
+
+                }
+            }
+            
+
+            foreach (PermutationPage permPage in permutationPages)
+            {
+                permPage.permutationComboBox.Items.Add("NEH");
+                permPage.permutationComboBox2.Items.Add("NEH");
+                permPage.permutationComboBoxNEH.Items.Add("NEH");
+            }
+        }
+
+
+
+
 
         public static void drawJohnon(MainWindow window)
         {
@@ -123,8 +161,9 @@ namespace Zad1.BackEnd
 
             foreach (PermutationPage permPage in permutationPages)
             {      
-                    permPage.permutationComboBox.Items.Add("JOHNSON!!!");
-                    permPage.permutationComboBox2.Items.Add("JOHNSON!!!");
+                permPage.permutationComboBox.Items.Add("JOHNSON");
+                permPage.permutationComboBox2.Items.Add("JOHNSON");
+                permPage.permutationComboBoxNEH.Items.Add("JOHNSON");
             }
 
         }
@@ -192,7 +231,7 @@ namespace Zad1.BackEnd
                     permutationPages[currentIterator].CMaxValue.Content = Initializer.secondMachinePermuteResult[currentIterator].Last().TaskStop;
                 }
             }
-            drawJohnon(window);
+           // drawJohnon(window);
         }
 
         public static void switchPage(int selectedIndex, int newDefaultTab)

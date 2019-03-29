@@ -131,7 +131,7 @@
                     <ToolBar Width="243">
                         <Separator />
                         <Label RenderTransformOrigin="1.19,0.701">Switch Permutation:</Label>
-                        <ComboBox x:Name="permutationComboBox2">
+                        <ComboBox x:Name="permutationComboBox2" SelectionChanged="PermutationComboBox2_SelectionChanged">
                         </ComboBox>
                     </ToolBar>
                 </ToolBarTray>
@@ -201,7 +201,7 @@
                     <ToolBar x:Name="NEHToolbar" Width="243">
                         <Separator />
                         <Label RenderTransformOrigin="1.19,0.701" Content="Switch Permutation:"/>
-                        <ComboBox x:Name="permutationComboBoxNEH" SelectionChanged="PermutationComboBox_SelectionChanged">
+                        <ComboBox x:Name="permutationComboBoxNEH" SelectionChanged="PermutationComboBoxNEH_SelectionChanged">
                         </ComboBox>
                     </ToolBar>
                 </ToolBarTray>
