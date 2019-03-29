@@ -110,7 +110,9 @@ namespace Zad1
             //Initializer.initialize();
             Initializer.initializeFromFile(numberOfTasks, numberOfMachines, parsedTasks);
             Initializer.simulation();
+
             GUI.drawGUI(GUI.mainWindow);
+            GUI.drawNEH();
             GUI.switchPage(1);
         }
 
@@ -119,6 +121,8 @@ namespace Zad1
             foreach (PermutationPage page in GUI.permutationPages)
             {
                 page.canvas.Children.Clear();
+                page.canvas2.Children.Clear();
+                page.canvasNEH.Children.Clear();
             }
             GUI.clearSimulation();
         }

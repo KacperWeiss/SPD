@@ -12,7 +12,7 @@ namespace Zad1.BackEnd
         public static List<WorkCenter> workCenters = new List<WorkCenter>();
         public static List<List<Task>> firstMachinePermuteResult = new List<List<Task>>();
         public static List<List<Task>> secondMachinePermuteResult = new List<List<Task>>();
-
+       
         public static void initialize()
         {
             workCenters.Add(new WorkCenter(new List<Task>()));

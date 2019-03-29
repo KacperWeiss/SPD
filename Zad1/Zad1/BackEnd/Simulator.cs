@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,11 +22,12 @@ namespace Zad1.BackEnd {
         static int taskID;
         static int taskStart;
         static int taskStop = 0;
-
+        public static int compTime = 0; 
         public static List<Task> firstMachineNEH = new List<Task>();
         public static List<Task> secondMachineNEH = new List<Task>();
         public static List<Task> thirdMachineNEH = new List<Task>();
         public static List<List<Task>> machineNEH = new List<List<Task>>();
+        public static List<NEHtask> solutionList = new List<NEHtask>();
 
         public static void simulateFullSearch(List<List<Task>> firstMachinePermuteResult, List<List<Task>> secondMachinePermuteResult) {
           
@@ -66,63 +68,6 @@ namespace Zad1.BackEnd {
                          }
                     }
                 } 
-            }
-        }
-
-        public static List<Task> simulateNEH(List<WorkCenter> workCenters)
-        {
-            //Stworzyc listę tasków totalWorkSpanPerTask, gdzie timeSpan zadania jest sumą wszystkich jego timeSpanów dla każdego workCentera np:
-            List<Task> totalWorkSpanPerTask = new List<Task>(workCenters[0].Tasks);
-            for (int i = 1; i < workCenters.Count; i++)
-            {
-                for (int j = 0; j < workCenters[i].Tasks.Count; j++)
-                {
-                    totalWorkSpanPerTask[j].TimeSpan += workCenters[i].Tasks[j].TimeSpan;
-                }
-            }
-
-            //Posortować "descending"
-            List<Task> SortedWorkSpanList = totalWorkSpanPerTask.OrderBy(o => o.TimeSpan).ToList();
-            SortedWorkSpanList.Reverse();
-
-            //Bazując na ID Tasków z tej listy dodawać do wirtualnych workcenterów pokolei po jednym tasku
-            //następnie umieszczając dodany task na każdej z możliwych pozycji symulować działanie maszyn dla takiego zestawu tasków
-            //Wybrać zestaw z najlepszym Cmax (TaskStop ostatniego zadania w ostatniej maszynie)
-            //Powtórzyć aż ilość tasków w wirtualnych work centerach będzie równa ilości tasków
-
-            List<WorkCenter> simulatedWorkCenters = new List<WorkCenter>(workCenters.Count);
-            addAnotherTaskToSimulation(workCenters, SortedWorkSpanList, simulatedWorkCenters);
-            #region addAnotherTaskToSimulation wytłumaczenie
-            //if (simulatedWorkCenters[0].Tasks.Count != workCenters[0].Tasks.Count)
-            //{
-            //    int currentID = SortedWorkSpanList.First().ID;
-            //    for (int i = 0; i < workCenters.Count; i++)
-            //    {
-            //        simulatedWorkCenters[i].Tasks.Add(new Task(workCenters[i].Tasks.SingleOrDefault(o => o.ID == currentID)));
-            //    }
-            //    SortedWorkSpanList.Remove(SortedWorkSpanList.Single(o => o.ID == currentID));
-            //}
-            #endregion
-            //symulacja wyników, swapująć kolejno taska aż pokona drogę od końca, do początku, zapisanie sekwencji dla której wychodzi to najlepiej
-            //Zapisanie do simulatedWorkCenters najlepszej sekwencji i powtórzenie działania(można wrzucić do while'a porównującego co samo, co ma if w obecnej metodzie addAnotherTaskToSimulation)
-
-
-            //Opcjonalnie zrobić sytuacje gdy totalWorkSpan jest taki sam dla większej ilości zadań, ale to zostawimy na później
-
-            //Zwrócić optymalną listę tasków
-            return new List<Task>();
-        }
-
-        private static void addAnotherTaskToSimulation(List<WorkCenter> workCenters, List<Task> SortedWorkSpanList, List<WorkCenter> simulatedWorkCenters)
-        {
-            if (simulatedWorkCenters[0].Tasks.Count != workCenters[0].Tasks.Count)
-            {
-                int currentID = SortedWorkSpanList.First().ID;
-                for (int i = 0; i < workCenters.Count; i++)
-                {
-                    simulatedWorkCenters[i].Tasks.Add(new Task(workCenters[i].Tasks.SingleOrDefault(o => o.ID == currentID)));
-                }
-                SortedWorkSpanList.Remove(SortedWorkSpanList.Single(o => o.ID == currentID));
             }
         }
 
@@ -183,10 +128,16 @@ namespace Zad1.BackEnd {
         }
 
 
-        public static List<Task> simulateNEH(List<WorkCenter> workCenters)
+        public static void simulateNEH(List<WorkCenter> workCenters)
         {
+            // Create new stopwatch.
+            Stopwatch stopwatch = new Stopwatch();
+
+            // Begin timing.
+            stopwatch.Start();
+
             List<NEHtask> priorityList = new List<NEHtask>();
-            List<NEHtask> solutionList = new List<NEHtask>();
+            
            
             //initialize priorityList
             foreach (Task task in workCenters[0].Tasks)
@@ -206,9 +157,10 @@ namespace Zad1.BackEnd {
             }
             // sorting the priorities -largest last
             priorityList.Sort((p, q) => p.taskPriority.CompareTo(q.taskPriority));
+            //priorityList.OrderBy(x => x.taskPriority).ThenBy(x => x.taskNumber).ToList();
 
-            int currentBest = 10000000;
-            int currentBestTime = 1000000;
+            int currentBest = 1000000000;
+            int currentBestTime = 1000000000;
 
             while (priorityList.Any())
             {
@@ -219,7 +171,8 @@ namespace Zad1.BackEnd {
                     fillMachines(solutionList);
                     for(int j = 0; j < machineNEH.Count -1; j++)
                     {
-                        sortPermutation(machineNEH[j], machineNEH[j +1], solutionList.Count(), machineNEH[j][0].TaskStart);
+                        sortPermutation(machineNEH[j], machineNEH[j + 1], solutionList.Count(), machineNEH[j][0].TaskStart);
+                        //sortPermutation(machineNEH[0/*j*/], machineNEH[1/*j +1*/], solutionList.Count(), 0/*machineNEH[j][0].TaskStart*/);
                         //sortPermutation(firstMachineNEH, secondMachineNEH, solutionList.Count(), 0);
                         //sortPermutation(secondMachineNEH, thirdMachineNEH, solutionList.Count(), secondMachineNEH[0].TaskStart);
                     }
@@ -234,73 +187,106 @@ namespace Zad1.BackEnd {
                     {
                         machineNEH[k].Clear();
                     }
-                    //firstMachineNEH.Clear();
-                   // secondMachineNEH.Clear();
-                   // thirdMachineNEH.Clear();
+                    
                     solutionList.RemoveAt(i);
                 }
                 solutionList.Insert(currentBest, priorityList.Last());
                 priorityList.RemoveAt(priorityList.Count() - 1);
-                currentBest = 10000000;
-                currentBestTime = 1000000;
+                currentBest = 1000000000;
+                currentBestTime = 1000000000;
             }
             fillMachines(solutionList);
             for (int j = 0; j < machineNEH.Count - 1; j++)
             {
-                sortPermutation(machineNEH[j], machineNEH[j + 1], solutionList.Count(), machineNEH[j][0].TaskStart);
+                sortPermutation(machineNEH[j], machineNEH[j +1], solutionList.Count(), machineNEH[j][0].TaskStart);
                 //sortPermutation(firstMachineNEH, secondMachineNEH, solutionList.Count(), 0);
                 //sortPermutation(secondMachineNEH, thirdMachineNEH, solutionList.Count(), secondMachineNEH[0].TaskStart);
             }
-
-            return new List<Task>();
+            stopwatch.Stop();
+            System.TimeSpan totalComputationTime = stopwatch.Elapsed;
+            compTime = totalComputationTime.Milliseconds;
         }
 
-
+        //finds best partial permutation
         public static void sortPermutation(List<Task> firstMachine, List<Task> secondMachine, int sizeOfTasks, int taskStart)
         {
-            for (int i = 0; i < sizeOfTasks; i++)
+            //machines 0 and 1
+            if(taskStart == 0)
             {
-
-                if (i == 0)
+                for (int i = 0; i < sizeOfTasks; i++)
                 {
-                    taskTimeSpan = firstMachine[i].TimeSpan;
-                    taskID = firstMachine[i].ID;
-                  //  taskStart = 0;
-                    taskStop = firstMachine[i].TimeSpan + taskStart;
-                    firstMachine[i].TaskStop = taskStop;
 
-                    secondMachine[i].TaskStart = taskStop;
-                    secondMachine[i].TaskStop = taskStop + secondMachine[i].TimeSpan;
-
-                   // thirdMachine[i].TaskStart = secondMachine[i].TaskStop;
-                   // thirdMachine[i].TaskStop = secondMachine[i].TaskStop + thirdMachine[i].TimeSpan;
-                }
-                else
-                {
-                    taskStart = taskStop;
-                    firstMachine[i].TaskStart = taskStart;
-                    taskStop = taskStart + firstMachine[i].TimeSpan;
-                    firstMachine[i].TaskStop = taskStop;
-
-                    secondMachine[i].TaskStart = firstMachine[i].TaskStop;
-                    secondMachine[i].TaskStop = secondMachine[i].TaskStart + secondMachine[i].TimeSpan;
-
-                   // thirdMachine[i].TaskStart = secondMachine[i].TaskStop;
-                   // thirdMachine[i].TaskStop = thirdMachine[i].TaskStart + thirdMachine[i].TimeSpan;
-
-                    if ((firstMachine[i].TaskStop <= secondMachine[i - 1].TaskStop))
+                    if (i == 0)
                     {
-                        secondMachine[i].TaskStart = secondMachine[i - 1].TaskStop;
-                        secondMachine[i].TaskStop = secondMachine[i].TaskStart + secondMachine[i].TimeSpan;
-                    }
+                        taskTimeSpan = firstMachine[i].TimeSpan;
+                        taskID = firstMachine[i].ID;
+                        //  taskStart = 0;
+                        taskStop = firstMachine[i].TimeSpan + taskStart;
+                        firstMachine[i].TaskStop = taskStop;
 
-                   // if ((secondMachine[i].TaskStop <= thirdMachine[i - 1].TaskStop))
-                   // {
-                       // thirdMachine[i].TaskStart = thirdMachine[i - 1].TaskStop;
-                       // thirdMachine[i].TaskStop = thirdMachine[i].TaskStart + thirdMachine[i].TimeSpan;
-                   // }
+                        secondMachine[i].TaskStart = taskStop;
+                        secondMachine[i].TaskStop = taskStop + secondMachine[i].TimeSpan;
+
+                        // thirdMachine[i].TaskStart = secondMachine[i].TaskStop;
+                        // thirdMachine[i].TaskStop = secondMachine[i].TaskStop + thirdMachine[i].TimeSpan;
+                    }
+                    else
+                    {
+                        taskStart = taskStop;
+                        firstMachine[i].TaskStart = taskStart;
+                        taskStop = taskStart + firstMachine[i].TimeSpan;
+                        firstMachine[i].TaskStop = taskStop;
+
+                        secondMachine[i].TaskStart = firstMachine[i].TaskStop;
+                        secondMachine[i].TaskStop = secondMachine[i].TaskStart + secondMachine[i].TimeSpan;
+
+                        // thirdMachine[i].TaskStart = secondMachine[i].TaskStop;
+                        // thirdMachine[i].TaskStop = thirdMachine[i].TaskStart + thirdMachine[i].TimeSpan;
+
+                        if ((firstMachine[i].TaskStop < secondMachine[i - 1].TaskStop))
+                        {
+                            secondMachine[i].TaskStart = secondMachine[i - 1].TaskStop;
+                            secondMachine[i].TaskStop = secondMachine[i].TaskStart + secondMachine[i].TimeSpan;
+                        }
+
+                        // if ((secondMachine[i].TaskStop <= thirdMachine[i - 1].TaskStop))
+                        // {
+                        // thirdMachine[i].TaskStart = thirdMachine[i - 1].TaskStop;
+                        // thirdMachine[i].TaskStop = thirdMachine[i].TaskStart + thirdMachine[i].TimeSpan;
+                        // }
+                    }
                 }
             }
+            //machines 1 and forth
+            else
+            {
+                for (int i = 0; i < sizeOfTasks; i++)
+                {
+
+                    if (i == 0)
+                    {
+                     
+                        taskStop = firstMachine[i].TimeSpan + taskStart;
+
+                        secondMachine[i].TaskStart = firstMachine[i].TaskStop;
+                        secondMachine[i].TaskStop = taskStop + secondMachine[i].TimeSpan;
+
+                    }
+                    else
+                    {  
+                        secondMachine[i].TaskStart = firstMachine[i].TaskStop;
+                        secondMachine[i].TaskStop = secondMachine[i].TaskStart + secondMachine[i].TimeSpan;
+
+
+                        if ((firstMachine[i].TaskStop < secondMachine[i - 1].TaskStop))
+                        {
+                            secondMachine[i].TaskStart = secondMachine[i - 1].TaskStop;
+                            secondMachine[i].TaskStop = secondMachine[i].TaskStart + secondMachine[i].TimeSpan;
+                        }
+                    }
+                }
+            }
+            
         }
 
         public static int indexOfTask(int IDvalue, List<Task> tasks)

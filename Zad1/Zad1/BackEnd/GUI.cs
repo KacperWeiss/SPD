@@ -54,12 +54,21 @@ namespace Zad1.BackEnd
                     });
                     permutationPages[permutationPages.Count() - 1].canvasNEH.Children.Add(rectanglesNEH.Last());
 
-                    Canvas.SetTop(rectanglesNEH.Last(), 10 + i *60);
+                    Canvas.SetTop(rectanglesNEH.Last(), 10 + i *70);
                     Canvas.SetLeft(rectanglesNEH.Last(), (25 * task.TaskStart));
-
+      
+                }
+                
+            }
+            foreach(PermutationPage page in permutationPages)
+            {
+                page.CMaxValueNEH.Content = Simulator.machineNEH.Last().Last().TaskStop;
+                page.CompTimeNEH.Content = Simulator.compTime;
+                foreach (NEHtask NehTask in Simulator.solutionList)
+                {
+                    page.NEHsequenceTextBlock.Text += NehTask.taskNumber.ToString() + " , ";
                 }
             }
-            
 
             foreach (PermutationPage permPage in permutationPages)
             {
@@ -231,7 +240,7 @@ namespace Zad1.BackEnd
                     permutationPages[currentIterator].CMaxValue.Content = Initializer.secondMachinePermuteResult[currentIterator].Last().TaskStop;
                 }
             }
-           // drawJohnon(window);
+            drawJohnon(window);
         }
 
         public static void switchPage(int selectedIndex, int newDefaultTab)
@@ -264,8 +273,23 @@ namespace Zad1.BackEnd
             {
                 page.permutationComboBox.Items.Clear();
                 page.permutationComboBox2.Items.Clear();
+                page.permutationComboBoxNEH.Items.Clear();
+                page.CMaxValue.Content = 0;
+                page.CMaxValueNEH.Content = 0;
+                page.CompTimeNEH.Content = 0;
             }
-            
+
+            //clearing NEH
+            foreach(List<Task> taskList in Simulator.machineNEH)
+            {
+                foreach(Task task in taskList)
+                {
+                    task.destroy();
+                }
+            }
+            Simulator.machineNEH.Clear();
+            Simulator.solutionList.Clear();
+
             permutationPages.Clear();   
         }
     }
