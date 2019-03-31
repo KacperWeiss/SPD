@@ -110,7 +110,9 @@ namespace Zad1
             //Initializer.initialize();
             Initializer.initializeFromFile(numberOfTasks, numberOfMachines, parsedTasks);
             Initializer.simulation();
+
             GUI.drawGUI(GUI.mainWindow);
+            GUI.drawNEH();
             GUI.switchPage(1);
         }
 
@@ -119,8 +121,30 @@ namespace Zad1
             foreach (PermutationPage page in GUI.permutationPages)
             {
                 page.canvas.Children.Clear();
+                page.canvas2.Children.Clear();
+                page.canvasNEH.Children.Clear();
             }
             GUI.clearSimulation();
+        }
+
+        private void PermutationComboBox2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (permutationComboBox2.SelectedItem != null)
+            {
+                GUI.switchPage(permutationComboBox2.SelectedIndex, 1);
+                //Dispatcher.BeginInvoke((Action)(() => permutationComboBox.SelectedItem = null));
+                permutationComboBox2.SelectedItem = null;
+            }
+        }
+
+        private void PermutationComboBoxNEH_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (permutationComboBoxNEH.SelectedItem != null)
+            {
+                GUI.switchPage(permutationComboBoxNEH.SelectedIndex, 1);
+                //Dispatcher.BeginInvoke((Action)(() => permutationComboBox.SelectedItem = null));
+                permutationComboBoxNEH.SelectedItem = null;
+            }
         }
     }
 }

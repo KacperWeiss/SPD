@@ -43,7 +43,9 @@ namespace Zad1
         {
             Initializer.initializeFromFile(numberOfTasks, numberOfMachines, parsedTasks);
             Initializer.simulation();
-            GUI.drawGUI(window); 
+
+            GUI.drawGUI(window);
+            GUI.drawNEH();
             GUI.switchPage(1);
         }
 
