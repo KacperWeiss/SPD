@@ -63,8 +63,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BackEnd\Components\Machines.cs" />
+    <Compile Include="BackEnd\Components\Machine.cs" />
     <Compile Include="BackEnd\Components\Task.cs" />
+    <Compile Include="BackEnd\Scenario\Initializer.cs" />
+    <Compile Include="BackEnd\Scenario\Scenario.cs" />
     <Compile Include="BackEnd\Simulations\AlgorithmNEH.cs" />
     <Compile Include="BackEnd\Simulations\AlgorithmJohnson.cs" />
     <Compile Include="BackEnd\Simulations\FullSearchConfiguration.cs" />
