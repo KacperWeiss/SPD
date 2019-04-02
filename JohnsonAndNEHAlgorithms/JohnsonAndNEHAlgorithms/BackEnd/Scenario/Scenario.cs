@@ -6,9 +6,8 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Scenario
 {
     public class Scenario
     {
-        public List<Machine> workCenters = new List<Machine>();
+        public List<Machine> scenarioMachines = new List<Machine>();
         public Configuration configuration;
-
-        public 
+        
     }
 }

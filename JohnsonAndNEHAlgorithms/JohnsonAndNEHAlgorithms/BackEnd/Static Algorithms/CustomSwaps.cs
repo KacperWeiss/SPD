@@ -8,7 +8,7 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Static_Algorithms
 {
     static class CustomSwaps
     {
-        public static void Swap<T>(this List<T> list, int index1, int index2)
+        public static void Swap<T>(List<T> list, int index1, int index2)
         {
             T tmp = list[index1];
             list[index1] = list[index2];

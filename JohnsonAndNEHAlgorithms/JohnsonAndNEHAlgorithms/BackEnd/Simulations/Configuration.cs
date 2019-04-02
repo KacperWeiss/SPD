@@ -8,7 +8,7 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
     {
         public List<Machine> ConfiguredMachines { get; protected set; } = new List<Machine>();
 
-        public abstract void GenerateConfiguration();
+        public abstract void GenerateConfiguration(List<Machine> rawMachines);
 
         public void SimulateConfiguration()
         {
@@ -28,6 +28,7 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
                     SimulateForNotFirstMachinePairs(firstMachine, secondMachine, taskListSize, firstTaskStart);
                 }
             }
+            return;
         }
 
         private static void SimulateForFirstMachinePair(Machine firstMachine, Machine secondMachine, int taskListSize)
