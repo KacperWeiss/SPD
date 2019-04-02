@@ -55,7 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Page Include="FrontEnd\WelcomeWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="BackEnd\Components\Machine.cs" />
     <Compile Include="BackEnd\Components\Task.cs" />
+    <Compile Include="BackEnd\Scenario\AlgorithmChoice.cs" />
     <Compile Include="BackEnd\Scenario\Initializer.cs" />
     <Compile Include="BackEnd\Scenario\Scenario.cs" />
     <Compile Include="BackEnd\Simulations\AlgorithmNEH.cs" />
@@ -74,12 +75,19 @@
     <Compile Include="BackEnd\Simulations\Configuration.cs" />
     <Compile Include="BackEnd\Static Algorithms\CustomSwaps.cs" />
     <Compile Include="BackEnd\Static Algorithms\Permutation.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="FrontEnd\WelcomeWindow.xaml.cs">
+      <DependentUpon>WelcomeWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="FrontEnd\ApplicationMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrontEnd\ApplicationMainWindow.xaml.cs">
+      <DependentUpon>ApplicationMainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

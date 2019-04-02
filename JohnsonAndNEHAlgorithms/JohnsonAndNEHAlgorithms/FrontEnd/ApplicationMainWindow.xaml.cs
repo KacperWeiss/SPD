@@ -10,19 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using JohnsonAndNEHAlgorithms.BackEnd.Scenario;
 
-namespace JohnsonAndNEHAlgorithms
+namespace JohnsonAndNEHAlgorithms.FrontEnd
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ApplicationMainWindow : Window
     {
-        public MainWindow()
+        public Scenario mainScenario;
+
+        public ApplicationMainWindow(Scenario loadedScenario)
         {
             InitializeComponent();
+            this.DataContext = this;
+
+            mainScenario = loadedScenario;
         }
     }
 }
