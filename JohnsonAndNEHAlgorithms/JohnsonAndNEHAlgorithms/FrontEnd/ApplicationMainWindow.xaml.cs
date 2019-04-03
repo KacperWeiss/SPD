@@ -21,6 +21,7 @@ namespace JohnsonAndNEHAlgorithms.FrontEnd
     public partial class ApplicationMainWindow : Window
     {
         public Scenario mainScenario;
+        private List<Scenario> scenariosArchive;
 
         public ApplicationMainWindow(Scenario loadedScenario)
         {
@@ -28,6 +29,17 @@ namespace JohnsonAndNEHAlgorithms.FrontEnd
             this.DataContext = this;
 
             mainScenario = loadedScenario;
+        }
+
+        private void NEHAlgorithm_OnClick(object sender, RoutedEventArgs e)
+        {
+            var machines = mainScenario.GetConfiguratedMachinesFor(AlgorithmChoice.NEH);
+
+            foreach (var machine in machines)
+            {
+
+            }
+
         }
     }
 }

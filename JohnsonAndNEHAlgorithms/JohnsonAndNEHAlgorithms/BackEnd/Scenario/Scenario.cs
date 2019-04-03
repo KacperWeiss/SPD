@@ -14,9 +14,10 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Scenario
         public Scenario(List<Machine> scenarioMachines)
         {
             this.scenarioMachines = scenarioMachines;
+            currentAlgorithm = AlgorithmChoice.NotSpecified;
         }
 
-        public List<Machine> getConfiguratedMachinesFor(AlgorithmChoice algorithm)
+        public List<Machine> GetConfiguratedMachinesFor(AlgorithmChoice algorithm)
         {
             if (currentAlgorithm == algorithm)
             {
@@ -24,6 +25,9 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Scenario
             }
             switch (algorithm)
             {
+                case AlgorithmChoice.NotSpecified:
+                    throw new Exception("You have to specify algorithm type to simulate it's scenario!");
+
                 case AlgorithmChoice.Johnson:
                     throw new NotImplementedException();
 

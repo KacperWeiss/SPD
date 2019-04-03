@@ -1,12 +1,32 @@
-﻿<Window x:Class="JohnsonAndNEHAlgorithms.FrontEnd.ApplicationMainWindow"
+﻿<Window x:Name="ApplicationMainWindowObj" x:Class="JohnsonAndNEHAlgorithms.FrontEnd.ApplicationMainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JohnsonAndNEHAlgorithms.FrontEnd"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
-    <Grid>
-        
+        Title="Simulations" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="ApplicationMainWindowGrid">
+        <DockPanel x:Name="Grid" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Save scenario">
+                        <MenuItem.Icon>
+                            <Image Source="pack://siteoforigin:,,,/Resources/SaveIcon.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Load scenario form _archive" />
+                    <MenuItem Header="Load _new scenario from file" />
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
+                <MenuItem Header="_Algorithms" Click="NEHAlgorithm_OnClick">
+                    <MenuItem Header="_NEH algorithm"/>
+                    <MenuItem Header="_Show CMax" IsCheckable="True" IsChecked="True" />
+                </MenuItem>
+            </Menu>
+            <UniformGrid x:Name="UniformGridForTable" Height="400.237" Margin="0,0,0,0" VerticalAlignment="Top" Width="791.127" Rows="5" Columns="5">
+            </UniformGrid>
+
+        </DockPanel>
     </Grid>
 </Window>

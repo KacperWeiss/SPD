@@ -11,6 +11,7 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Scenario
     /// </summary>
     public enum AlgorithmChoice
     {
+        NotSpecified,
         Johnson, // NotImplementedYet
         NEH
     }

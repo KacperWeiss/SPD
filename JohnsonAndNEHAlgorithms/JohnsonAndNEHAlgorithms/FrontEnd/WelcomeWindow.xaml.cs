@@ -37,6 +37,12 @@ namespace JohnsonAndNEHAlgorithms.FrontEnd
 
         private void LoadFile_OnClick(object sender, RoutedEventArgs e)
         {
+            LoadFileAndParseTimeSpan();
+            ShowConfiguredMainWindow();
+        }
+
+        internal void LoadFileAndParseTimeSpan()
+        {
             OpenFileDialog openFileDialogWindow = new OpenFileDialog();
             openFileDialogWindow.Title = "Select a text file";
             openFileDialogWindow.Filter = "All supported files|*.txt";
@@ -88,10 +94,19 @@ namespace JohnsonAndNEHAlgorithms.FrontEnd
 
                 }
             }
+        }
+
+        internal void ShowConfiguredMainWindow()
+        {
             this.Hide();
             ApplicationMainWindow applicationMainWindow = new ApplicationMainWindow(Initializer.initializeScenario(numberOfTasks, numberOfMachines, parsedTasks));
             applicationMainWindow.ShowDialog();
             this.Show();
+        }
+
+        private void OnClosed_ShowFarewellMessage(object sender, EventArgs e)
+        {
+            MessageBox.Show("Good bye!","Flow Shop Scheduling EXIT");
 
         }
     }
