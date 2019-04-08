@@ -16,12 +16,12 @@ using JohnsonAndNEHAlgorithms.BackEnd.Scenario;
 namespace JohnsonAndNEHAlgorithms.FrontEnd
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for ApplicationMainWindow.xaml
     /// </summary>
     public partial class ApplicationMainWindow : Window
     {
         public Scenario mainScenario;
-        private List<Scenario> scenariosArchive;
+        //private List<Scenario> scenariosArchive;
 
         public ApplicationMainWindow(Scenario loadedScenario)
         {
@@ -40,7 +40,38 @@ namespace JohnsonAndNEHAlgorithms.FrontEnd
         private void DrawComponents(List<BackEnd.Components.Machine> machines)
         {
             Grid grid = SetUpGrid(machines);
+            CreateTopRow(machines, grid);
+            CreateGridContent(machines, grid);
+        }
 
+        private Grid SetUpGrid(List<BackEnd.Components.Machine> machines)
+        {
+            Grid grid = new Grid();
+            grid = (Grid)this.FindName("UniformGridForTable");
+            CreateRows(machines, grid);
+            CreateColumns(machines, grid);
+
+            return grid;
+        }
+
+        private static void CreateColumns(List<BackEnd.Components.Machine> machines, Grid grid)
+        {
+            for (int nrOfColumns = 0; nrOfColumns <= machines.Last().Tasks.Last().TaskStop; nrOfColumns++)
+            {
+                grid.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+        }
+
+        private static void CreateRows(List<BackEnd.Components.Machine> machines, Grid grid)
+        {
+            for (int nrOfRows = 0; nrOfRows <= machines.Count; nrOfRows++)
+            {
+                grid.RowDefinitions.Add(new RowDefinition());
+            }
+        }
+
+        private static void CreateTopRow(List<BackEnd.Components.Machine> machines, Grid grid)
+        {
             grid.Children.Add(new TextBlock
             {
                 Text = "X"
@@ -53,7 +84,10 @@ namespace JohnsonAndNEHAlgorithms.FrontEnd
                     Text = i.ToString()
                 });
             }
+        }
 
+        private static void CreateGridContent(List<BackEnd.Components.Machine> machines, Grid grid)
+        {
             for (int machineNr = 0; machineNr < machines.Count; machineNr++)
             {
                 grid.Children.Add(new TextBlock
@@ -84,30 +118,5 @@ namespace JohnsonAndNEHAlgorithms.FrontEnd
             }
         }
 
-        private Grid SetUpGrid(List<BackEnd.Components.Machine> machines)
-        {
-            Grid grid = new Grid();
-            grid = (Grid)this.FindName("UniformGridForTable");
-            CreateRows(machines, grid);
-            CreateColumns(machines, grid);
-
-            return grid;
-        }
-
-        private static void CreateColumns(List<BackEnd.Components.Machine> machines, Grid grid)
-        {
-            for (int nrOfColumns = 0; nrOfColumns <= machines.Last().Tasks.Last().TaskStop; nrOfColumns++)
-            {
-                grid.ColumnDefinitions.Add(new ColumnDefinition());
-            }
-        }
-
-        private static void CreateRows(List<BackEnd.Components.Machine> machines, Grid grid)
-        {
-            for (int nrOfRows = 0; nrOfRows <= machines.Count; nrOfRows++)
-            {
-                grid.RowDefinitions.Add(new RowDefinition());
-            }
-        }
     }
 }
