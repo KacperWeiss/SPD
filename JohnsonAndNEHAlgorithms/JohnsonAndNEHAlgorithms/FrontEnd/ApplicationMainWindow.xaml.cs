@@ -34,12 +34,80 @@ namespace JohnsonAndNEHAlgorithms.FrontEnd
         private void NEHAlgorithm_OnClick(object sender, RoutedEventArgs e)
         {
             var machines = mainScenario.GetConfiguratedMachinesFor(AlgorithmChoice.NEH);
+            DrawComponents(machines);
+        }
 
-            foreach (var machine in machines)
+        private void DrawComponents(List<BackEnd.Components.Machine> machines)
+        {
+            Grid grid = SetUpGrid(machines);
+
+            grid.Children.Add(new TextBlock
             {
+                Text = "X"
+            });
 
+            for (int i = 1; i <= machines.Last().Tasks.Last().TaskStop; i++)
+            {
+                grid.Children.Add(new TextBlock
+                {
+                    Text = i.ToString()
+                });
             }
 
+            for (int machineNr = 0; machineNr < machines.Count; machineNr++)
+            {
+                grid.Children.Add(new TextBlock
+                {
+                    Text = "Machine" + (machineNr + 1).ToString()
+                });
+                foreach (var task in machines[machineNr].Tasks)
+                {
+                    for (int j = 0; j < machines.Last().Tasks.Last().TaskStop; j++)
+                    {
+                        if (task.TaskStart <= j && task.TaskStop > j)
+                        {
+                            grid.Children.Add(new TextBlock
+                            {
+                                Text = "",
+                                Background = new SolidColorBrush(Colors.Red)
+                            });
+                        }
+                        else
+                        {
+                            grid.Children.Add(new TextBlock
+                            {
+                                Text = ""
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
+        private Grid SetUpGrid(List<BackEnd.Components.Machine> machines)
+        {
+            Grid grid = new Grid();
+            grid = (Grid)this.FindName("UniformGridForTable");
+            CreateRows(machines, grid);
+            CreateColumns(machines, grid);
+
+            return grid;
+        }
+
+        private static void CreateColumns(List<BackEnd.Components.Machine> machines, Grid grid)
+        {
+            for (int nrOfColumns = 0; nrOfColumns <= machines.Last().Tasks.Last().TaskStop; nrOfColumns++)
+            {
+                grid.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+        }
+
+        private static void CreateRows(List<BackEnd.Components.Machine> machines, Grid grid)
+        {
+            for (int nrOfRows = 0; nrOfRows <= machines.Count; nrOfRows++)
+            {
+                grid.RowDefinitions.Add(new RowDefinition());
+            }
         }
     }
 }

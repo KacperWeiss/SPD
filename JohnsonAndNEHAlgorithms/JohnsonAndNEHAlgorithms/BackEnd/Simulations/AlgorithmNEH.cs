@@ -27,7 +27,19 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
 
         private void InitializeCleanConfiguredMachinesList(List<Machine> rawMachines)
         {
-            ConfiguredMachines = new List<Machine>(rawMachines);
+            ConfiguredMachines.Clear();
+
+            foreach (var machine in rawMachines)
+            {
+                ConfiguredMachines.Add(new Machine(machine.Tasks));
+            }
+
+            //foreach (var configuredMachine in ConfiguredMachines)
+            //{
+            //    configuredMachine.Tasks.Add()
+            //}
+
+            //ConfiguredMachines = new List<Machine>(rawMachines);
             foreach (var machine in ConfiguredMachines)
             {
                 machine.Tasks.Clear();

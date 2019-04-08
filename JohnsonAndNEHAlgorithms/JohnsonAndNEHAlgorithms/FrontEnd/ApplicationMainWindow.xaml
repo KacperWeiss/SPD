@@ -24,7 +24,7 @@
                     <MenuItem Header="_Show CMax" IsCheckable="True" IsChecked="True" />
                 </MenuItem>
             </Menu>
-            <UniformGrid x:Name="UniformGridForTable" Height="400.237" Margin="0,0,0,0" VerticalAlignment="Top" Width="791.127" Rows="5" Columns="5">
+            <UniformGrid x:Name="UniformGridForTable" Height="400.237" Margin="0,0,0,0" VerticalAlignment="Top" Width="791.127">
             </UniformGrid>
 
         </DockPanel>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JohnsonAndNEHAlgorithms.BackEnd.Components
 {
-    public class Task
+    public class Task : ICloneable
     {
         public Task(int iD, int timeSpan)
         {
@@ -31,5 +31,10 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Components
         public int TimeSpan { get; set; }
         public int TaskStart { get; set; }
         public int TaskStop { get => TaskStart + TimeSpan; }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JohnsonAndNEHAlgorithms.BackEnd.Components
 {
-    public class Machine
+    public class Machine : ICloneable
     {
         public List<Task> Tasks { get; set; }
 
@@ -16,8 +16,13 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Components
 
             taskList.ForEach((item) =>
             {
-                Tasks.Add(new Task(item));
+                Tasks.Add(new Task((Task)item.Clone()));
             });
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }
