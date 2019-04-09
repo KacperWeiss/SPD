@@ -12,20 +12,20 @@
                 <MenuItem Header="_File">
                     <MenuItem Header="_Save scenario">
                         <MenuItem.Icon>
-                            <Image Source="pack://siteoforigin:,,,/Resources/SaveIcon.png" />
+                            <Image Source="pack://siteoforigin:,,,/Resources/SaveIcon.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Load scenario form _archive" />
                     <MenuItem Header="Load _new scenario from file" />
                     <MenuItem Header="_Exit" />
                 </MenuItem>
-                <MenuItem Header="_Algorithms" Click="NEHAlgorithm_OnClick">
-                    <MenuItem Header="_NEH algorithm"/>
-                    <MenuItem Header="_Show CMax" IsCheckable="True" IsChecked="True" />
+                <MenuItem Header="_Algorithms">
+                    <MenuItem Header="_NEH algorithm" Click="NEHAlgorithm_OnClick"/>
+                    <MenuItem x:Name="ShowCmaxCheckmark" Header="_Show CMax" IsCheckable="True" IsChecked="True" Click="ShowCmaxCheckmark_Click" />
                 </MenuItem>
+                <Label x:Name="CmaxLabel">Cmax:</Label>
             </Menu>
-            <UniformGrid x:Name="UniformGridForTable" Height="400.237" Margin="0,0,0,0" VerticalAlignment="Top" Width="791.127">
-            </UniformGrid>
+            <UniformGrid x:Name="UniformGridForTable" Margin="0,0,0,0" VerticalAlignment="Top"/>
 
         </DockPanel>
     </Grid>

@@ -48,7 +48,11 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
 
         private static List<Task> CreatePrioritizedList(List<Machine> rawMachines)
         {
-            List<Task> unorderedTasks = new List<Task>(rawMachines[0].Tasks);
+            List<Task> unorderedTasks = new List<Task>();
+            for (int i = 0; i < rawMachines[0].Tasks.Count; i++)
+            {
+                unorderedTasks.Add((Task)rawMachines[0].Tasks[i].Clone());
+            }
             for (int i = 1; i < rawMachines.Count; i++)
             {
                 for (int j = 0; j < rawMachines[i].Tasks.Count; j++)
@@ -74,28 +78,36 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
         {
             SimulateConfiguration();
             cMax = ConfiguredMachines.Last().Tasks.Last().TaskStop;
+            bestMachineConfiguration.Clear();
             ConfiguredMachines.ForEach((item) =>
             {
                 bestMachineConfiguration.Add(new Machine(item.Tasks)); // Probably do another copy of task alone
             });
 
-            foreach (Machine machine in ConfiguredMachines)
+            for (int i = 0; i < ConfiguredMachines[0].Tasks.Count - 1; i++)
             {
-                for (int i = 0; i < machine.Tasks.Count - 1; i++)
+                foreach (var machine in ConfiguredMachines)
                 {
                     CustomSwaps.Swap(machine.Tasks, i, machine.Tasks.Count - 1);
-                    SimulateConfiguration();
-                    if (cMax > ConfiguredMachines.Last().Tasks.Last().TaskStop)
+                }
+
+                SimulateConfiguration();
+                if (cMax > ConfiguredMachines.Last().Tasks.Last().TaskStop)
+                {
+                    cMax = ConfiguredMachines.Last().Tasks.Last().TaskStop;
+                    bestMachineConfiguration.Clear();
+                    ConfiguredMachines.ForEach((item) =>
                     {
-                        cMax = ConfiguredMachines.Last().Tasks.Last().TaskStop;
-                        ConfiguredMachines.ForEach((item) =>
-                        {
-                            bestMachineConfiguration.Add(new Machine(item.Tasks)); // Probably do another copy of task alone
-                        });
-                    }
+                        bestMachineConfiguration.Add(new Machine(item.Tasks)); // Probably do another copy of task alone
+                    });
+                }
+
+                foreach (var machine in ConfiguredMachines)
+                {
                     CustomSwaps.Swap(machine.Tasks, i, machine.Tasks.Count - 1);
                 }
             }
+
             ConfiguredMachines.Clear();
             bestMachineConfiguration.ForEach((item) =>
             {
