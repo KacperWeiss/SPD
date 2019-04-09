@@ -43,12 +43,12 @@ namespace Zad1.BackEnd
         }
         public static void simulation()
         {
-            firstMachinePermuteResult = new List<List<Task>>(MyPermute.PermuteTasks(workCenters[0].Tasks));
+          //  firstMachinePermuteResult = new List<List<Task>>(MyPermute.PermuteTasks(workCenters[0].Tasks));
             MyPermute.TaskLists.Clear();
-            secondMachinePermuteResult = new List<List<Task>>(MyPermute.PermuteTasks(workCenters[1].Tasks));
+           // secondMachinePermuteResult = new List<List<Task>>(MyPermute.PermuteTasks(workCenters[1].Tasks));
             MyPermute.TaskLists.Clear();
 
-            Simulator.simulateFullSearch(firstMachinePermuteResult, secondMachinePermuteResult);
+           // Simulator.simulateFullSearch(firstMachinePermuteResult, secondMachinePermuteResult);
             Simulator.simulateNEH(workCenters);
         }
 

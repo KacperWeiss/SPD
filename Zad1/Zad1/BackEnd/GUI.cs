@@ -240,7 +240,7 @@ namespace Zad1.BackEnd
                     permutationPages[currentIterator].CMaxValue.Content = Initializer.secondMachinePermuteResult[currentIterator].Last().TaskStop;
                 }
             }
-            drawJohnon(window);
+            //drawJohnon(window);
         }
 
         public static void switchPage(int selectedIndex, int newDefaultTab)
