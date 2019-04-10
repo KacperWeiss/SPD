@@ -23,7 +23,7 @@ namespace JohnsonAndNEHAlgorithms.FrontEnd
     {
         public Scenario mainScenario;
         public int Cmax;
-        //private List<Scenario> scenariosArchive;
+        //private Dictionary<string, Scenario> scenariosArchive;
 
         public ApplicationMainWindow(Scenario loadedScenario)
         {
@@ -78,14 +78,16 @@ namespace JohnsonAndNEHAlgorithms.FrontEnd
         {
             grid.Children.Add(new TextBlock
             {
-                Text = "X"
+                Text = "X",
+                TextAlignment = TextAlignment.Center
             });
 
             for (int i = 1; i <= machines.Last().Tasks.Last().TaskStop; i++)
             {
                 grid.Children.Add(new TextBlock
                 {
-                    Text = i.ToString()
+                    Text = i.ToString(),
+                    TextAlignment = TextAlignment.Center
                 });
             }
         }
@@ -99,7 +101,8 @@ namespace JohnsonAndNEHAlgorithms.FrontEnd
             {
                 grid.Children.Add(new TextBlock
                 {
-                    Text = "Machine" + (machineNr + 1).ToString()
+                    Text = "Machine" + (machineNr + 1).ToString(),
+                    TextAlignment = TextAlignment.Center
                 });
 
                 for (int j = 0; j < totalTime; j++)
@@ -125,6 +128,7 @@ namespace JohnsonAndNEHAlgorithms.FrontEnd
                         grid.Children.Add(new TextBlock
                         {
                             Text = "",
+                            TextAlignment = TextAlignment.Center,
                             Background = new SolidColorBrush(Colors.Red)
                         });
                     }
@@ -132,32 +136,12 @@ namespace JohnsonAndNEHAlgorithms.FrontEnd
                     {
                         grid.Children.Add(new TextBlock
                         {
-                            Text = ""
+                            Text = "",
+                            TextAlignment = TextAlignment.Center
                         });
                     }
                 }
                 isWorking.Clear();
-                //foreach (var task in machines[machineNr].Tasks)
-                //{
-                //    for (int j = 0; j < machines.Last().Tasks.Last().TaskStop; j++)
-                //    {
-                //        if (task.TaskStart <= j && task.TaskStop > j)
-                //        {
-                //            grid.Children.Add(new TextBlock
-                //            {
-                //                Text = "",
-                //                Background = new SolidColorBrush(Colors.Red)
-                //            });
-                //        }
-                //        else
-                //        {
-                //            grid.Children.Add(new TextBlock
-                //            {
-                //                Text = ""
-                //            });
-                //        }
-                //    }
-                //}
             }
         }
 

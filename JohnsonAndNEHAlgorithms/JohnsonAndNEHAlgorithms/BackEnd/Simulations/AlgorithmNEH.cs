@@ -9,7 +9,7 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
     {
         private int cMax;
         private List<Task> sortedTasks = new List<Task>();
-        private List<Machine> bestMachineConfiguration = new List<Machine>();
+        public List<Machine> bestMachineConfiguration { get; private set; } = new List<Machine>();
 
         public override void GenerateConfiguration(List<Machine> rawMachines)
         {
@@ -23,6 +23,7 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
                 AddTaskToConfiguration(rawMachines);
                 GetBestConfigurationForCurrentIteration();
             }
+            SimulateConfiguration();
         }
 
         private void InitializeCleanConfiguredMachinesList(List<Machine> rawMachines)
@@ -31,15 +32,9 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
 
             foreach (var machine in rawMachines)
             {
-                ConfiguredMachines.Add(new Machine(machine.Tasks));
+                ConfiguredMachines.Add(new Machine((Machine)machine.Clone()));
             }
-
-            //foreach (var configuredMachine in ConfiguredMachines)
-            //{
-            //    configuredMachine.Tasks.Add()
-            //}
-
-            //ConfiguredMachines = new List<Machine>(rawMachines);
+            
             foreach (var machine in ConfiguredMachines)
             {
                 machine.Tasks.Clear();
@@ -81,7 +76,7 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
             bestMachineConfiguration.Clear();
             ConfiguredMachines.ForEach((item) =>
             {
-                bestMachineConfiguration.Add(new Machine(item.Tasks)); // Probably do another copy of task alone
+                bestMachineConfiguration.Add(new Machine((Machine)item.Clone()));
             });
 
             for (int i = 0; i < ConfiguredMachines[0].Tasks.Count - 1; i++)
@@ -98,7 +93,7 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
                     bestMachineConfiguration.Clear();
                     ConfiguredMachines.ForEach((item) =>
                     {
-                        bestMachineConfiguration.Add(new Machine(item.Tasks)); // Probably do another copy of task alone
+                        bestMachineConfiguration.Add(new Machine((Machine)item.Clone()));
                     });
                 }
 
@@ -111,7 +106,7 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
             ConfiguredMachines.Clear();
             bestMachineConfiguration.ForEach((item) =>
             {
-                ConfiguredMachines.Add(new Machine(item.Tasks)); // Probably do another copy of task alone
+                ConfiguredMachines.Add(new Machine((Machine)item.Clone()));
             });
         }
     }
