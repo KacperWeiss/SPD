@@ -10,8 +10,8 @@ namespace UnitTestProject
     public class NEHAgorithmTests
     {
         //Setup
-        AlgorithmNEH algorithm;
-        readonly List<Machine> rawMachines;
+        private AlgorithmNEH algorithm;
+        private readonly List<Machine> rawMachines;
 
         public NEHAgorithmTests()
         {

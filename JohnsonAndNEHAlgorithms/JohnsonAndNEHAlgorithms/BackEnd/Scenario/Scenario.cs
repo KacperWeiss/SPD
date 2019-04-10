@@ -33,12 +33,10 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Scenario
 
                 case AlgorithmChoice.NEH:
                     configuration = new AlgorithmNEH();
-                    configuration.GenerateConfiguration(scenarioMachines);
                     break;
             }
+            configuration.GenerateConfiguration(scenarioMachines);
             return configuration.ConfiguredMachines;
         }
-
-        // Dodać enuma i metode która w switchu tworzy konfiguracje dla algorytmu i wysyła do GUI
     }
 }
