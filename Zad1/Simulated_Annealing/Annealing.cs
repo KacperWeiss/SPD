@@ -63,7 +63,7 @@ namespace Simulated_Annealing
             }
             for(int i = 0; i < machineList.Count -1; i++)
             {
-                Configuration.sortPermutation(machineList[i].Tasks, machineList[i + 1].Tasks,
+                Configuration.configureTwoNeighboringMachines(machineList[i].Tasks, machineList[i + 1].Tasks,
                                               machineList[0].Tasks.Count, machineList[i].Tasks[0].TaskStart
                                             );
 

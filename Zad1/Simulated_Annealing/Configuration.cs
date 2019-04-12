@@ -8,7 +8,7 @@ namespace Simulated_Annealing
     static class Configuration
     {
         //finds best partial permutation
-        public static void sortPermutation(List<Task> firstMachine, List<Task> secondMachine, int sizeOfTasks, int taskStart)
+        public static void configureTwoNeighboringMachines(List<Task> firstMachine, List<Task> secondMachine, int sizeOfTasks, int taskStart)
         {
             //machines 0 and 1
             if (taskStart == 0)
