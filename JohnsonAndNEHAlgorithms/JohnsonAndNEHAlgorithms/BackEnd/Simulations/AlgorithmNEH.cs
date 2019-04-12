@@ -64,7 +64,7 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
             int currentID = sortedTasks.First().ID;
             for (int i = 0; i < rawMachines.Count; i++)
             {
-                ConfiguredMachines[i].Tasks.Add(new Task(rawMachines[i].Tasks.SingleOrDefault(o => o.ID == currentID)));
+                ConfiguredMachines[i].Tasks.Add(new Task((Task)rawMachines[i].Tasks.SingleOrDefault(o => o.ID == currentID).Clone()));
             }
             sortedTasks.Remove(sortedTasks.Single(o => o.ID == currentID));
         }
