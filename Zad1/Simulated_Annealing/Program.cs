@@ -7,10 +7,9 @@ namespace Simulated_Annealing
     
     class Program
     {
-
+        const string filepath = "C:\\Users\\Krystian Wojakiewicz\\Desktop\\SPD\\Zad1\\Simulated_Annealing\\test3.txt";
         private static void readFile(string[] args, Parser parser)
         {
-            string filepath = "C:\\Users\\Krystian Wojakiewicz\\Desktop\\SPD\\Zad1\\Simulated_Annealing\\test.txt";
             try
             {
                 using (StreamReader sr = File.OpenText(filepath))
@@ -44,8 +43,12 @@ namespace Simulated_Annealing
             parser.parseFile();
             Initializer.initializeFromFile(parser.numberOfTasks, parser.numberOfMachines, parser.parsedTasks);
             System.Console.WriteLine("number of machines: " + parser.numberOfMachines);
+            System.Console.WriteLine("number of tasks: " + parser.numberOfTasks);
+
+
             Annealing.simulatedAnnealing();
             System.Console.WriteLine("Cmax: " + Annealing.Cmax);
+            System.Console.WriteLine("Algorithm Time: " + Annealing.totalAlgorithmTime);
             System.Console.ReadLine();
         }
     }

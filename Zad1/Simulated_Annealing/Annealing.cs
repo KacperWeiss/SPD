@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Zad1.BackEnd;
@@ -11,7 +12,8 @@ namespace Simulated_Annealing
         public static List<Machine> machineList = new List<Machine>(Initializer.machineList.Count);
         static float temperature = 30;
         public static int Cmax = 1000000000;
-        const float coolingCoefficient = 0.6f;
+        const float coolingCoefficient = 0.9f;
+        public static int totalAlgorithmTime = 0;
 
         public static void Swap<T>(this List<T> list, int index1, int index2)
         {
@@ -27,9 +29,9 @@ namespace Simulated_Annealing
             });
         }
 
-        public static float updateTemperature()
+        public static float updateTemperature(float currentTemperature)
         {
-            return coolingCoefficient * temperature;
+            return coolingCoefficient * currentTemperature;
         }    
 
         public static int setInitialTemperature(int initialTemp)
@@ -73,6 +75,7 @@ namespace Simulated_Annealing
 
             if(calculateAcceptationProbability(newCmax) > randomNumber)
             {
+                Cmax = newCmax;
                 return true;
             }
             return false;
@@ -83,15 +86,22 @@ namespace Simulated_Annealing
             Random random = new Random();
             float currentTemperature = temperature;
             copyMachines();
-            while (currentTemperature != 0.5 * temperature)
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            while (currentTemperature > 0.1 * temperature)
             {
-                currentTemperature = generateNewNeighbor(random);
+                currentTemperature = generateNewNeighbor(random, currentTemperature);
             }
+
+            stopWatch.Stop();
+            totalAlgorithmTime = stopWatch.Elapsed.Milliseconds;
         }
 
-        private static float generateNewNeighbor(Random random)
+        private static float generateNewNeighbor(Random random, float currentTemperature)
         {
-            float currentTemperature;
+            
             int randomNeighbor = random.Next(0, machineList[0].Tasks.Count - 1);
             int randomNeighbor2 = random.Next(0, machineList[0].Tasks.Count - 1);
             swapAndConfigure(randomNeighbor, randomNeighbor2);
@@ -99,7 +109,7 @@ namespace Simulated_Annealing
             {
                 swapAndConfigure(randomNeighbor, randomNeighbor2);
             }
-            currentTemperature = updateTemperature();
+            currentTemperature = updateTemperature(currentTemperature);
             return currentTemperature;
         }
     }
