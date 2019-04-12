@@ -16,7 +16,7 @@ namespace UnitTestProject
         public NEHAgorithmTests()
         {
             algorithm = new AlgorithmNEH();
-            rawMachines = rawMachines = new List<Machine>
+            rawMachines = new List<Machine>
             {
                 new Machine(new List<Task>
                 {
