@@ -13,12 +13,17 @@ namespace Simulated_Annealing
         public static int Cmax = 1000000000;
         const float coolingCoefficient = 0.6f;
 
-        public static void Swap<T>(this List<T> list, int index1, int index2)
+        public static void simulatedAnnealing()
         {
-            T tmp = list[index1];
-            list[index1] = list[index2];
-            list[index2] = tmp;
+            Random random = new Random();
+            float currentTemperature = temperature;
+            copyMachines();
+            while (currentTemperature != 0.5 * temperature)
+            {
+                currentTemperature = generateNewNeighbor(random);
+            }
         }
+
         public static void copyMachines()
         {
             Initializer.machineList.ForEach((item) =>
@@ -27,19 +32,18 @@ namespace Simulated_Annealing
             });
         }
 
-        public static float updateTemperature()
+        private static float generateNewNeighbor(Random random)
         {
-            return coolingCoefficient * temperature;
-        }    
-
-        public static int setInitialTemperature(int initialTemp)
-        {
-            return initialTemp;
-        }
-
-        public static float setCoolingCoefficient(float coolingCoefficient)
-        {
-            return coolingCoefficient;
+            float currentTemperature;
+            int randomNeighbor = random.Next(0, machineList[0].Tasks.Count - 1);
+            int randomNeighbor2 = random.Next(0, machineList[0].Tasks.Count - 1);
+            swapAndConfigure(randomNeighbor, randomNeighbor2);
+            if (!acceptNeighborSolution(machineList[machineList.Count - 1].Tasks.Last().TaskStop))
+            {
+                swapAndConfigure(randomNeighbor, randomNeighbor2);
+            }
+            currentTemperature = updateTemperature();
+            return currentTemperature;
         }
 
         private static void swapAndConfigure(int randomNeighbor, int randomNeighbor2)
@@ -56,6 +60,25 @@ namespace Simulated_Annealing
             }
         }
 
+        public static void Swap<T>(this List<T> list, int index1, int index2)
+        {
+            T tmp = list[index1];
+            list[index1] = list[index2];
+            list[index2] = tmp;
+        }
+
+        public static bool acceptNeighborSolution(int newCmax)
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(0, 1);
+
+            if (calculateAcceptationProbability(newCmax) > randomNumber)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static double calculateAcceptationProbability(int newCmax)
         {
             if (newCmax > Cmax)
@@ -66,41 +89,19 @@ namespace Simulated_Annealing
             return 1d;
         }
 
-        public static bool acceptNeighborSolution(int newCmax)
+        public static float updateTemperature()
         {
-            Random random = new Random();
-            int randomNumber = random.Next(0, 1);
+            return coolingCoefficient * temperature;
+        }    
 
-            if(calculateAcceptationProbability(newCmax) > randomNumber)
-            {
-                return true;
-            }
-            return false;
-        }
+        //public static int setInitialTemperature(int initialTemp)
+        //{
+        //    return initialTemp;
+        //}
 
-        public static void simulatedAnnealing()
-        {
-            Random random = new Random();
-            float currentTemperature = temperature;
-            copyMachines();
-            while (currentTemperature != 0.5 * temperature)
-            {
-                currentTemperature = generateNewNeighbor(random);
-            }
-        }
-
-        private static float generateNewNeighbor(Random random)
-        {
-            float currentTemperature;
-            int randomNeighbor = random.Next(0, machineList[0].Tasks.Count - 1);
-            int randomNeighbor2 = random.Next(0, machineList[0].Tasks.Count - 1);
-            swapAndConfigure(randomNeighbor, randomNeighbor2);
-            if (!acceptNeighborSolution(machineList[machineList.Count - 1].Tasks.Last().TaskStop))
-            {
-                swapAndConfigure(randomNeighbor, randomNeighbor2);
-            }
-            currentTemperature = updateTemperature();
-            return currentTemperature;
-        }
+        //public static float setCoolingCoefficient(float coolingCoefficient)
+        //{
+        //    return coolingCoefficient;
+        //}
     }
 }
