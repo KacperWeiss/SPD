@@ -12,6 +12,7 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
 
         public void SimulateConfiguration()
         {
+            SetTimeStartsToZero();
             for (int i = 0; i < ConfiguredMachines.Count - 1; i++)
             {
                 Machine firstMachine = ConfiguredMachines[i];
@@ -31,6 +32,17 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
             return;
         }
 
+        private void SetTimeStartsToZero()
+        {
+            foreach (var machine in ConfiguredMachines)
+            {
+                foreach (var task in machine.Tasks)
+                {
+                    task.TaskStart = 0;
+                }
+            }
+        }
+
         private static void SimulateForFirstMachinePair(Machine firstMachine, Machine secondMachine, int taskListSize)
         {
             for (int j = 0; j < taskListSize; j++)
@@ -42,7 +54,7 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
                 else
                 {
                     firstMachine.Tasks[j].TaskStart = firstMachine.Tasks[j - 1].TaskStop;
-                    if (firstMachine.Tasks[j].TaskStop > secondMachine.Tasks[j - 1].TaskStop)
+                    if (firstMachine.Tasks[j].TaskStop >= secondMachine.Tasks[j - 1].TaskStop)
                     {
                         secondMachine.Tasks[j].TaskStart = firstMachine.Tasks[j].TaskStop;
                     }
@@ -64,7 +76,7 @@ namespace JohnsonAndNEHAlgorithms.BackEnd.Simulations
                 }
                 else
                 {
-                    if (firstMachine.Tasks[j].TaskStop > secondMachine.Tasks[j - 1].TaskStop)
+                    if (firstMachine.Tasks[j].TaskStop >= secondMachine.Tasks[j - 1].TaskStop)
                     {
                         secondMachine.Tasks[j].TaskStart = firstMachine.Tasks[j].TaskStop;
                     }
