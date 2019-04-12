@@ -44,6 +44,8 @@ namespace Simulated_Annealing
             parser.parseFile();
             Initializer.initializeFromFile(parser.numberOfTasks, parser.numberOfMachines, parser.parsedTasks);
             System.Console.WriteLine("number of machines: " + parser.numberOfMachines);
+            Annealing.simulatedAnnealing();
+            System.Console.WriteLine("Cmax: " + Annealing.Cmax);
             System.Console.ReadLine();
         }
     }
