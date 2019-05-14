@@ -151,12 +151,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Classes\Initializer\DataReader.h" />
+    <ClInclude Include="BaseAlgorithm.h" />
+    <ClInclude Include="Fwd.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Classes\TaskRPQ.h" />
+    <ClInclude Include="RPQSolver.h" />
+    <ClInclude Include="Schrage.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Classes\Initializer\DataReader.cpp" />
+    <ClCompile Include="BaseAlgorithm.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -164,7 +166,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Classes\TaskRPQ.cpp" />
+    <ClCompile Include="RPQSolver.cpp" />
+    <ClCompile Include="Schrage.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
