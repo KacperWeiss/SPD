@@ -39,3 +39,14 @@ RPQTasks Schrage::orderRPQs(RPQTasks rawTasks, int numberOfTasks)
 
 	return ordered;
 }
+
+int Schrage::CalculateCmax(const RPQTasks& data, const int numberOfTasks)
+{
+	int m = 0, c = 0;
+	for (int i = 0; i < numberOfTasks; ++i)
+	{
+		m = std::max(m, data[i].r) + data[i].p;
+		c = std::max(c, m + data[i].q);
+	}
+	return c;
+}

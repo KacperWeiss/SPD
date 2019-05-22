@@ -10,9 +10,9 @@ public:
 	~BaseAlgorithm() = default;
 
 	virtual RPQTasks orderRPQs(RPQTasks rawTasks, int numberOfTasks) = 0;
+	virtual int CalculateCmax(const RPQTasks& data, const int numberOfTasks) = 0;
 
 protected:
 	void PrintResult(RPQTasks& ordered, const int numberOfTasks);
-	int CalculateCmax(const RPQTasks& data, const int numberOfTasks);
 };
 

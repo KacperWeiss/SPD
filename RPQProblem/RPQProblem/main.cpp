@@ -12,5 +12,5 @@ int main()
 	RPQSolverUPtr solver(new RPQSolver());
 
 	solver->InitializeWithFile(selectedFileName);
-	solver->WithAlgorithm(new Schrage())->GetOrderedRPQs();
+	solver->WithAlgorithm(new SchragePmtn())->GetOrderedRPQs();
 }

@@ -9,6 +9,7 @@
 RPQTasks SchragePmtn::orderRPQs(RPQTasks rawTasks, int numberOfTasks)
 {
 	int t = 0;
+	int cmax = 0;
 	RPQ tempRPQ{ 0, 0, INT32_MAX };
 	notReady = rawTasks;
 
@@ -42,14 +43,27 @@ RPQTasks SchragePmtn::orderRPQs(RPQTasks rawTasks, int numberOfTasks)
 		else
 		{
 			RPQ a = ready[0];
+			ordered.push_back(ready[0]);
 			std::pop_heap(ready.begin(), ready.end(), compareQ);
 			ready.pop_back();
 			tempRPQ = a;
 			t = t + a.p;
+			cmax = std::max(cmax, t + a.q);
 		}
 	}
 
 	PrintResult(ordered, numberOfTasks);
 
 	return ordered;
+}
+
+int SchragePmtn::CalculateCmax(const RPQTasks & data, const int numberOfTasks)
+{
+	int m = 0, c = 0;
+	for (int i = 0; i < numberOfTasks; ++i)
+	{
+		m = std::max(m, data[i].r) + data[i].p;
+		c = std::max(c, m + data[i].q);
+	}
+	return c;
 }

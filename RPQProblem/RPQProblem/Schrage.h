@@ -11,8 +11,10 @@ public:
 
 	// Inherited via BaseAlgorithm
 	virtual RPQTasks orderRPQs(RPQTasks rawTasks, int numberOfTasks) override;
+	virtual int CalculateCmax(const RPQTasks & data, const int numberOfTasks) override;
 
 private:
 	RPQTasks notReady, ready, ordered;
+
 };
 
