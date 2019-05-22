@@ -1,14 +1,15 @@
 #include "pch.h"
-#include "Schrage.h"
+#include "SchragePmtn.h"
 
 #include <algorithm>
 #include <memory>
 
 #include "RPQSolver.h"
 
-RPQTasks Schrage::orderRPQs(RPQTasks rawTasks, int numberOfTasks)
+RPQTasks SchragePmtn::orderRPQs(RPQTasks rawTasks, int numberOfTasks)
 {
 	int t = 0;
+	RPQ tempRPQ{ 0, 0, INT32_MAX };
 	notReady = rawTasks;
 
 	auto compareR = [](RPQ a, RPQ b) {if (a.r == b.r) return a.ID > b.ID; return a.r > b.r; };
@@ -19,19 +20,32 @@ RPQTasks Schrage::orderRPQs(RPQTasks rawTasks, int numberOfTasks)
 	{
 		while (!notReady.empty() and notReady[0].r <= t)
 		{
+			RPQ a = notReady[0];
 			ready.push_back(notReady[0]);
 			std::push_heap(ready.begin(), ready.end(), compareQ);
 			std::pop_heap(notReady.begin(), notReady.end(), compareR);
 			notReady.pop_back();
+
+			if (a.q > tempRPQ.q)
+			{
+				tempRPQ.p = t - a.r;
+				t = a.r;
+				if (tempRPQ.p > 0)
+				{
+					ready.push_back(tempRPQ);
+					std::push_heap(ready.begin(), ready.end(), compareQ);
+				}
+			}
 		}
 		if (ready.empty())
 			t = notReady[0].r;
 		else
 		{
-			ordered.push_back(ready[0]);
+			RPQ a = ready[0];
 			std::pop_heap(ready.begin(), ready.end(), compareQ);
 			ready.pop_back();
-			t = t + ordered.back().p;
+			tempRPQ = a;
+			t = t + a.p;
 		}
 	}
 

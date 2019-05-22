@@ -156,6 +156,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="RPQSolver.h" />
     <ClInclude Include="Schrage.h" />
+    <ClInclude Include="SchragePmtn.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseAlgorithm.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RPQSolver.cpp" />
     <ClCompile Include="Schrage.cpp" />
+    <ClCompile Include="SchragePmtn.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,6 +4,7 @@
 
 #include "RPQSolver.h"
 #include "Schrage.h"
+#include "SchragePmtn.h"
 
 int main()
 {
@@ -11,6 +12,5 @@ int main()
 	RPQSolverUPtr solver(new RPQSolver());
 
 	solver->InitializeWithFile(selectedFileName);
-	solver->WithAlgorithm(new Schrage());
-	solver->GetOrderedRPQs();
+	solver->WithAlgorithm(new Schrage())->GetOrderedRPQs();
 }

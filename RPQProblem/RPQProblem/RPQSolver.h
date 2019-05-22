@@ -18,7 +18,7 @@ public:
 
 	void InitializeWithFile(std::string fileName);
 
-	void WithAlgorithm(BaseAlgorithm* AlgorithmToGetResultWith);
+	RPQSolver* WithAlgorithm(BaseAlgorithm* AlgorithmToGetResultWith);
 	RPQTasks GetOrderedRPQs();
 
 private:

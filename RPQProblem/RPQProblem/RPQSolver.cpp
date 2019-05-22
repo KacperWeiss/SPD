@@ -22,9 +22,10 @@ void RPQSolver::InitializeWithFile(std::string fileName)
 	}
 }
 
-void RPQSolver::WithAlgorithm(BaseAlgorithm* AlgorithmToGetResultWith)
+RPQSolver* RPQSolver::WithAlgorithm(BaseAlgorithm* AlgorithmToGetResultWith)
 {
 	selectedAlgorithm.reset(AlgorithmToGetResultWith);
+	return this;
 }
 
 RPQTasks RPQSolver::GetOrderedRPQs()
