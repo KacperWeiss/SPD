@@ -30,5 +30,5 @@ RPQSolver* RPQSolver::WithAlgorithm(BaseAlgorithm* AlgorithmToGetResultWith)
 
 RPQTasks RPQSolver::GetOrderedRPQs()
 {
-	return selectedAlgorithm->orderRPQs(RPQTasksRaw, numberOfTasks);
+	return selectedAlgorithm->OrderRPQs(RPQTasksRaw, numberOfTasks);
 }

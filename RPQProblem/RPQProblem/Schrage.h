@@ -10,10 +10,10 @@ public:
 	~Schrage() = default;
 
 	// Inherited via BaseAlgorithm
-	virtual RPQTasks orderRPQs(RPQTasks rawTasks, int numberOfTasks) override;
-	virtual int CalculateCmax(const RPQTasks & data, const int numberOfTasks) override;
+	virtual RPQTasks OrderRPQs(RPQTasks rawTasks, int numberOfTasks) override;
 
 private:
+	void CalculateCmax(const RPQTasks & data, const int numberOfTasks);
 	RPQTasks notReady, ready, ordered;
 
 };

@@ -6,10 +6,9 @@
 
 #include "RPQSolver.h"
 
-RPQTasks SchragePmtn::orderRPQs(RPQTasks rawTasks, int numberOfTasks)
+RPQTasks SchragePmtn::OrderRPQs(RPQTasks rawTasks, int numberOfTasks)
 {
 	int t = 0;
-	int cmax = 0;
 	RPQ tempRPQ{ 0, 0, INT32_MAX };
 	notReady = rawTasks;
 
@@ -52,18 +51,7 @@ RPQTasks SchragePmtn::orderRPQs(RPQTasks rawTasks, int numberOfTasks)
 		}
 	}
 
-	PrintResult(ordered, numberOfTasks);
+	PrintResult(ordered);
 
 	return ordered;
-}
-
-int SchragePmtn::CalculateCmax(const RPQTasks & data, const int numberOfTasks)
-{
-	int m = 0, c = 0;
-	for (int i = 0; i < numberOfTasks; ++i)
-	{
-		m = std::max(m, data[i].r) + data[i].p;
-		c = std::max(c, m + data[i].q);
-	}
-	return c;
 }

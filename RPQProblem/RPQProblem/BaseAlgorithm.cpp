@@ -6,7 +6,7 @@
 
 #include "RPQSolver.h"
 
-void BaseAlgorithm::PrintResult(RPQTasks& ordered, const int numberOfTasks)
+void BaseAlgorithm::PrintResult(RPQTasks& ordered)
 {
 	std::cout << "Order of tasks:\n";
 	for (auto task : ordered)
@@ -14,5 +14,10 @@ void BaseAlgorithm::PrintResult(RPQTasks& ordered, const int numberOfTasks)
 	std::cout << std::endl;
 
 	std::cout << "Cmax:\n";
-	std::cout << CalculateCmax(ordered, numberOfTasks) << std::endl;
+	std::cout << GetCmax() << std::endl;
+}
+
+int BaseAlgorithm::GetCmax()
+{
+	return cmax;
 }
