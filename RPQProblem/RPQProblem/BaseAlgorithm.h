@@ -11,10 +11,12 @@ public:
 
 	virtual RPQTasks OrderRPQs(RPQTasks rawTasks, int numberOfTasks) = 0;
 	int GetCmax();
+	RPQTasks GetOrderedRPQs();
 
 protected:
 	void PrintResult(RPQTasks& ordered);
 
 	int cmax;
+	RPQTasks ordered;
 };
 

@@ -13,7 +13,6 @@ class RPQSolver
 {
 public:
 	RPQSolver() = default;
-	RPQSolver(const RPQSolver&);
 	~RPQSolver() = default;
 
 	void InitializeWithFile(std::string fileName);

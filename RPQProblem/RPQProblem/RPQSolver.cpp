@@ -5,10 +5,6 @@
 
 #include "BaseAlgorithm.h"
 
-RPQSolver::RPQSolver(const RPQSolver &)
-{
-}
-
 void RPQSolver::InitializeWithFile(std::string fileName)
 {
 	std::fstream file(fileName);

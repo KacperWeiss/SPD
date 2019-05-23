@@ -14,7 +14,7 @@ public:
 
 private:
 	void CalculateCmax(const RPQTasks & data, const int numberOfTasks);
-	RPQTasks notReady, ready, ordered;
+	RPQTasks notReady, ready;
 
 };
 

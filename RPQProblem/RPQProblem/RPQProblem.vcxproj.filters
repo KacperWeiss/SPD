@@ -33,6 +33,9 @@
     <ClInclude Include="SchragePmtn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Carlier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -51,6 +54,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SchragePmtn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Carlier.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

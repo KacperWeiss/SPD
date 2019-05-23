@@ -13,6 +13,6 @@ public:
 	virtual RPQTasks OrderRPQs(RPQTasks rawTasks, int numberOfTasks) override;
 
 private:
-	RPQTasks notReady, ready, ordered;
+	RPQTasks notReady, ready;
 };
 

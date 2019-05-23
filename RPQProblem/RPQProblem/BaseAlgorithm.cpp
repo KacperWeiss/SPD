@@ -21,3 +21,8 @@ int BaseAlgorithm::GetCmax()
 {
 	return cmax;
 }
+
+RPQTasks BaseAlgorithm::GetOrderedRPQs()
+{
+	return ordered;
+}
