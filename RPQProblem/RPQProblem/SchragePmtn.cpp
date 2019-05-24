@@ -6,7 +6,7 @@
 
 #include "RPQSolver.h"
 
-RPQTasks SchragePmtn::OrderRPQs(RPQTasks rawTasks, int numberOfTasks)
+RPQTasks SchragePmtn::OrderRPQs(RPQTasks& rawTasks, int numberOfTasks)
 {
 	int t = 0;
 	RPQ tempRPQ{ 0, 0, INT32_MAX };
@@ -51,7 +51,7 @@ RPQTasks SchragePmtn::OrderRPQs(RPQTasks rawTasks, int numberOfTasks)
 		}
 	}
 
-	PrintResult(ordered);
+	//PrintResult(ordered);
 
 	return ordered;
 }

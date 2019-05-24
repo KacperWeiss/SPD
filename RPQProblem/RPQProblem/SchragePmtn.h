@@ -10,7 +10,7 @@ public:
 	~SchragePmtn() = default;
 
 	// Inherited via BaseAlgorithm
-	virtual RPQTasks OrderRPQs(RPQTasks rawTasks, int numberOfTasks) override;
+	virtual RPQTasks OrderRPQs(RPQTasks& rawTasks, int numberOfTasks) override;
 
 private:
 	RPQTasks notReady, ready;

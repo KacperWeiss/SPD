@@ -5,12 +5,14 @@
 #include "RPQSolver.h"
 #include "Schrage.h"
 #include "SchragePmtn.h"
+#include "Carlier.h"
 
 int main()
 {
-	std::string selectedFileName = "in50.txt";
+	std::string selectedFileName = "data000.txt";
 	RPQSolverUPtr solver(new RPQSolver());
 
 	solver->InitializeWithFile(selectedFileName);
-	solver->WithAlgorithm(new SchragePmtn())->GetOrderedRPQs();
+	solver->WithAlgorithm(new Carlier())->GetOrderedRPQs();
+
 }

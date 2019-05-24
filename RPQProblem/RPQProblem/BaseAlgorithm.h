@@ -9,7 +9,7 @@ public:
 	BaseAlgorithm() = default;
 	~BaseAlgorithm() = default;
 
-	virtual RPQTasks OrderRPQs(RPQTasks rawTasks, int numberOfTasks) = 0;
+	virtual RPQTasks OrderRPQs(RPQTasks& rawTasks, int numberOfTasks) = 0;
 	int GetCmax();
 	RPQTasks GetOrderedRPQs();
 

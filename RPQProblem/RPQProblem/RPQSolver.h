@@ -6,7 +6,7 @@
 
 struct RPQ
 {
-	int r, p, q, ID;
+	int r, p, q, ID, endTime;
 };
 
 class RPQSolver
