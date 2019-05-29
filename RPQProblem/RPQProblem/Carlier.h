@@ -11,9 +11,8 @@ public:
 	// Inherited via BaseAlgorithm
 	virtual RPQTasks OrderRPQs(RPQTasks& rawTasks, int numberOfTasks) override;
 
-	int FindElementByID(RPQTasks schrageOrdered, int oldR_ID);
-	void DoCarlier(RPQTasks& rawTasks, int numberOfTasks);
 	
+
 private:
 	int DesignateA(RPQTasks optimalTaskOrder, int upperBound);
 	int DesignateB(RPQTasks optimalTaskOrder, int A, int upprBound);
@@ -21,16 +20,17 @@ private:
 	
 	int getAppendedH(RPQTasks schrageOrdered, int &newR, int C, int &newP, int &newQ);
 	int CalculatePreviousP(RPQTasks optimalTasksOrder, int begin, int end);
-	int CalculateCmax(const RPQTasks& data, const int numberOfTasks);
-
-	RPQTasks CalculateEndTimes(RPQTasks& optimalTaskOrder);
+	int FindElementByID(RPQTasks schrageOrdered, int oldR_ID);
 	
+	RPQTasks CalculateEndTimes(RPQTasks& optimalTaskOrder);
+	RPQTasks DoCarlier(RPQTasks& rawTasks, int numberOfTasks);
+
 	SchrageUPtr schrage;
 	SchragePmtnUPtr schragePmtn;
 
 	int upperBound, lowerBound;
 	int A = -1, B = -1, C = -1;
-	int oldR, oldQ, oldR_ID, oldQ_ID;
+	int oldR, oldQ;
 
 	RPQTasks optimalTaskOrder, schrageOrdered;
 };

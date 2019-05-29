@@ -10,7 +10,7 @@ void BaseAlgorithm::PrintResult(RPQTasks& ordered)
 {
 	std::cout << "Order of tasks:\n";
 	for (auto task : ordered)
-		std::cout << task.ID + 1 << " ";
+		std::cout << task.ID << " ";
 	std::cout << std::endl;
 
 	std::cout << "Cmax:\n";

@@ -7,6 +7,7 @@
 
 void RPQSolver::InitializeWithFile(std::string fileName)
 {
+	RPQTasksRaw.clear();
 	std::fstream file(fileName);
 	int numberOfColumns, r, p, q;
 	
