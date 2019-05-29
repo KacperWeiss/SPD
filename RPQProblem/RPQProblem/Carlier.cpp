@@ -7,7 +7,8 @@
 
 #include <algorithm>
 #include <iostream>
-//Google OR-tools mixed-integer programming////
+
+
 Carlier::Carlier() 
 	: upperBound(INT32_MAX)
 	, schrage(std::make_unique<Schrage>())

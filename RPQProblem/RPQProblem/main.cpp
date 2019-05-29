@@ -14,6 +14,7 @@ int main()
 		"in50.txt",
 		"in100.txt",
 		"in200.txt",
+		"test000.txt",
 
 		"data000.txt",
 		"data001.txt",
