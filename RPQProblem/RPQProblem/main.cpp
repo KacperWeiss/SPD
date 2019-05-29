@@ -9,7 +9,7 @@
 
 int main()
 {
-	std::string selectedFileName = "data000.txt";
+	std::string selectedFileName = "data001.txt";
 	RPQSolverUPtr solver(new RPQSolver());
 
 	solver->InitializeWithFile(selectedFileName);

@@ -7,33 +7,36 @@
 
 #include <algorithm>
 #include <iostream>
-
-Carlier::Carlier() : upperBound(INT32_MAX)
+//Google OR-tools mixed-integer programming////
+Carlier::Carlier() : upperBound(INT32_MAX), schrage(std::make_unique<Schrage>()), schragePmtn(std::make_unique<SchragePmtn>())
 {
 }
 
 RPQTasks Carlier::OrderRPQs(RPQTasks& rawTasks, int numberOfTasks)
 {
 	//do normal Schrage and calculate upper bound
-	SchrageUPtr schrage = std::make_unique<Schrage>();
+	//SchrageUPtr schrage = std::make_unique<Schrage>();
+	schrage.reset();
+	schrage = std::make_unique<Schrage>();
 	schrage->OrderRPQs(rawTasks, numberOfTasks);
-
+	schrageOrdered = schrage->GetOrderedRPQs();
+	CalculateEndTimes(schrageOrdered);
+	
 	//if upper bound is better, then we have new better permutation
 	if (schrage->GetCmax() < upperBound)
 	{
 		cmax = upperBound = schrage->GetCmax();
 		optimalTaskOrderSchrage = schrage->GetOrderedRPQs();
-		CalculateEndTimes(optimalTaskOrderSchrage);
+		//CalculateEndTimes(optimalTaskOrderSchrage);
 	}
 	// find element C, which is going to be the more optimal node (if exists)
-	int C = DesignateC(optimalTaskOrderSchrage, upperBound);
+	//int C = DesignateC(optimalTaskOrderSchrage, cmax);
+	int C = DesignateC(schrageOrdered, schrage->GetCmax());
 
 	//if hasn't found better element 
 	if (C == -1) 
 	{
-		//ordered = optimalTaskOrderSchrage;
-		//cmax = schrage->CalculateCmax(optimalTaskOrderSchrage, numberOfTasks);
-		cmax = schrage->GetCmax();
+		//cmax = schrage->GetCmax();
 		return optimalTaskOrderSchrage; // if can't find better solutions, it cuts off node
 	} 
 
@@ -50,9 +53,11 @@ RPQTasks Carlier::OrderRPQs(RPQTasks& rawTasks, int numberOfTasks)
 	int oldR = optimalTaskOrderSchrage[C].r;
 	int oldR_ID = optimalTaskOrderSchrage[C].ID;
 	optimalTaskOrderSchrage[C].r = std::max(optimalTaskOrderSchrage[C].r, newR + newP);
-	
+
+
 	// perform SchragePMTN with the changed R
-	SchragePmtnUPtr schragePmtn = std::make_unique<SchragePmtn>();
+	schragePmtn.reset();
+	schragePmtn = std::make_unique<SchragePmtn>();
 	schragePmtn->OrderRPQs(optimalTaskOrderSchrage, numberOfTasks);
 	
 	int H = newR + newP + newQ; // H(K) = r(K), p(K), q(K)
@@ -62,7 +67,7 @@ RPQTasks Carlier::OrderRPQs(RPQTasks& rawTasks, int numberOfTasks)
 	lowerBound = std::max( std::max(H, appendedH), lowerBound);
 
 	// if satisfied, do recursive Carlier
-	if (lowerBound < upperBound)
+	if ( (lowerBound < upperBound) && (oldR != optimalTaskOrderSchrage[C].r) )
 	{
 		optimalTaskOrderSchrage = OrderRPQs(optimalTaskOrderSchrage, numberOfTasks);
 	}
@@ -78,13 +83,15 @@ RPQTasks Carlier::OrderRPQs(RPQTasks& rawTasks, int numberOfTasks)
 	optimalTaskOrderSchrage[C].q = std::max(optimalTaskOrderSchrage[C].q, newQ + newP);
 	
 	//do ScragePMTN with the changed Q
+	schragePmtn.reset();
+	schragePmtn = std::make_unique<SchragePmtn>();
 	schragePmtn->OrderRPQs(optimalTaskOrderSchrage, numberOfTasks);
 
 	lowerBound = schragePmtn->GetCmax();
 	lowerBound = std::max( std::max(H, appendedH), lowerBound);
 
 	// if satisfied, do recursive Carlier
-	if (lowerBound < upperBound)
+	if ( (lowerBound < upperBound) && (oldQ != optimalTaskOrderSchrage[C].q) )
 	{
 		optimalTaskOrderSchrage = OrderRPQs(optimalTaskOrderSchrage, numberOfTasks);
 	}
@@ -94,7 +101,7 @@ RPQTasks Carlier::OrderRPQs(RPQTasks& rawTasks, int numberOfTasks)
 	int indexQ = FindElementByID(oldQ_ID);
 	optimalTaskOrderSchrage[indexQ].q = oldQ;
 	
-	cmax = CalculateCmax(optimalTaskOrderSchrage, numberOfTasks);
+	//cmax = CalculateCmax(optimalTaskOrderSchrage, numberOfTasks);
 	PrintResult(optimalTaskOrderSchrage);
 	return optimalTaskOrderSchrage;
 }

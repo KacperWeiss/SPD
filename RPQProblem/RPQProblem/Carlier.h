@@ -26,12 +26,12 @@ private:
 
 	RPQTasks CalculateEndTimes(RPQTasks& optimalTaskOrder);
 	
-	//SchrageUPtr schrage;
-	//SchragePmtnUPtr schragePmtn;
+	SchrageUPtr schrage;
+	SchragePmtnUPtr schragePmtn;
 
 	int upperBound, lowerBound;
-	//int cmax;
+	
 	int A = -1, B = -1, C = -1;
-	RPQTasks optimalTaskOrderSchrage, optimalTaskOrderSchragePmtn, optimalTaskOrderCarlier;
+	RPQTasks optimalTaskOrderSchrage, schrageOrdered;
 };
 
