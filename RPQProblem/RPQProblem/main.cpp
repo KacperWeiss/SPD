@@ -13,6 +13,6 @@ int main()
 	RPQSolverUPtr solver(new RPQSolver());
 
 	solver->InitializeWithFile(selectedFileName);
-	solver->WithAlgorithm(new Carlier())->GetOrderedRPQs();
-
+	Carlier* carlier = new Carlier();
+	solver->WithAlgorithm(carlier)->GetOrderedRPQs();
 }

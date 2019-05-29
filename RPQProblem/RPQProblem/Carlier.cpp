@@ -8,120 +8,122 @@
 #include <algorithm>
 #include <iostream>
 //Google OR-tools mixed-integer programming////
-Carlier::Carlier() : upperBound(INT32_MAX), schrage(std::make_unique<Schrage>()), schragePmtn(std::make_unique<SchragePmtn>())
+Carlier::Carlier() 
+	: upperBound(INT32_MAX)
+	, schrage(std::make_unique<Schrage>())
+	, schragePmtn(std::make_unique<SchragePmtn>())
+	, oldQ_ID(-1)
+	, oldR_ID(-1)
+{}
+
+void Carlier::DoCarlier(RPQTasks& rawTasks, int numberOfTasks)
 {
+	OrderRPQs(rawTasks, numberOfTasks);
+	PrintResult(this->optimalTaskOrder);
 }
 
 RPQTasks Carlier::OrderRPQs(RPQTasks& rawTasks, int numberOfTasks)
 {
 	//do normal Schrage and calculate upper bound
-	//SchrageUPtr schrage = std::make_unique<Schrage>();
 	schrage.reset();
 	schrage = std::make_unique<Schrage>();
 	schrage->OrderRPQs(rawTasks, numberOfTasks);
-	schrageOrdered = schrage->GetOrderedRPQs();
+	this->schrageOrdered = schrage->GetOrderedRPQs();
 	CalculateEndTimes(schrageOrdered);
 	
 	//if upper bound is better, then we have new better permutation
-	if (schrage->GetCmax() < upperBound)
+	if (schrage->GetCmax() < this->upperBound)
 	{
-		cmax = upperBound = schrage->GetCmax();
-		optimalTaskOrderSchrage = schrage->GetOrderedRPQs();
-		//CalculateEndTimes(optimalTaskOrderSchrage);
+		this->cmax = this->upperBound = schrage->GetCmax();
+		this->optimalTaskOrder = schrage->GetOrderedRPQs();
 	}
 	// find element C, which is going to be the more optimal node (if exists)
-	//int C = DesignateC(optimalTaskOrderSchrage, cmax);
-	int C = DesignateC(schrageOrdered, schrage->GetCmax());
+	int C = DesignateC(this->schrageOrdered, schrage->GetCmax());
 
 	//if hasn't found better element 
-	if (C == -1) 
-	{
-		//cmax = schrage->GetCmax();
-		return optimalTaskOrderSchrage; // if can't find better solutions, it cuts off node
-	} 
+	if (C == -1) { return this->optimalTaskOrder; } // if can't find better solutions, it cuts off node
 
 	//calculate r(K), p(K), q(K) , K = { C+1..C+2..B }
 	int newR = INT32_MAX, newP = 0, newQ = INT32_MAX;
 	for (int i = this->C + 1; i <= this->A; i++)
 	{
-		newR = std::min(newR, optimalTaskOrderSchrage[i].r);
-		newP += optimalTaskOrderSchrage[i].p;
-		newQ = std::min(newQ, optimalTaskOrderSchrage[i].q);
+		newR = std::min(newR, this->schrageOrdered[i].r);
+		newP += this->schrageOrdered[i].p;
+		newQ = std::min(newQ, this->schrageOrdered[i].q);
 	}
 
 	//change R 
-	int oldR = optimalTaskOrderSchrage[C].r;
-	int oldR_ID = optimalTaskOrderSchrage[C].ID;
-	optimalTaskOrderSchrage[C].r = std::max(optimalTaskOrderSchrage[C].r, newR + newP);
+	int oldR = this->schrageOrdered[C].r;
+	int oldR_ID = this->schrageOrdered[C].ID;
+	if (oldR_ID == this->oldR_ID) { return optimalTaskOrder; }
+	this->schrageOrdered[C].r = std::max(this->schrageOrdered[C].r, newR + newP);
 
 
 	// perform SchragePMTN with the changed R
 	schragePmtn.reset();
 	schragePmtn = std::make_unique<SchragePmtn>();
-	schragePmtn->OrderRPQs(optimalTaskOrderSchrage, numberOfTasks);
+	schragePmtn->OrderRPQs(this->schrageOrdered, numberOfTasks);
 	
-	int H = newR + newP + newQ; // H(K) = r(K), p(K), q(K)
-	int appendedH = getAppendedH(newR, C, newP, newQ); // appendeH = H( Ku{C} )
+	int H = newR + newP + newQ;												 // H(K) = r(K), p(K), q(K)
+	int appendedH = getAppendedH(this->schrageOrdered, newR, C, newP, newQ); // appendeH = H( Ku{C} )
 
-	lowerBound = schragePmtn->GetCmax();
-	lowerBound = std::max( std::max(H, appendedH), lowerBound);
+	this->lowerBound = schragePmtn->GetCmax();
+	this->lowerBound = std::max( std::max(H, appendedH), this->lowerBound);
 
 	// if satisfied, do recursive Carlier
-	if ( (lowerBound < upperBound) && (oldR != optimalTaskOrderSchrage[C].r) )
+	if ( (this->lowerBound < this->upperBound) && (oldR != this->schrageOrdered[C].r) )
 	{
-		optimalTaskOrderSchrage = OrderRPQs(optimalTaskOrderSchrage, numberOfTasks);
+		this->optimalTaskOrder = OrderRPQs(this->schrageOrdered, numberOfTasks);
 	}
 	
 	//recreate R from before the change
-	//optimalTaskOrderSchrage[C].r = oldR;
-	int indexR = FindElementByID(oldR_ID);
-	optimalTaskOrderSchrage[indexR].r = oldR;
+	int indexR = FindElementByID(this->schrageOrdered, oldR_ID);
+	this->schrageOrdered[indexR].r = oldR;
 
 	//now change Q
-	int oldQ = optimalTaskOrderSchrage[C].q;
-	int oldQ_ID = optimalTaskOrderSchrage[C].ID;
-	optimalTaskOrderSchrage[C].q = std::max(optimalTaskOrderSchrage[C].q, newQ + newP);
+	int oldQ = this->schrageOrdered[C].q;
+	int oldQ_ID = this->schrageOrdered[C].ID;
+	if (oldQ_ID == this->oldQ_ID) { return optimalTaskOrder; }
+	this->schrageOrdered[C].q = std::max(this->schrageOrdered[C].q, newQ + newP);
 	
 	//do ScragePMTN with the changed Q
 	schragePmtn.reset();
 	schragePmtn = std::make_unique<SchragePmtn>();
-	schragePmtn->OrderRPQs(optimalTaskOrderSchrage, numberOfTasks);
+	schragePmtn->OrderRPQs(this->schrageOrdered, numberOfTasks);
 
-	lowerBound = schragePmtn->GetCmax();
-	lowerBound = std::max( std::max(H, appendedH), lowerBound);
+	this->lowerBound = schragePmtn->GetCmax();
+	this->lowerBound = std::max( std::max(H, appendedH), this->lowerBound);
 
 	// if satisfied, do recursive Carlier
-	if ( (lowerBound < upperBound) && (oldQ != optimalTaskOrderSchrage[C].q) )
+	if ( (this->lowerBound < this->upperBound) && (oldQ != this->schrageOrdered[C].q) )
 	{
-		optimalTaskOrderSchrage = OrderRPQs(optimalTaskOrderSchrage, numberOfTasks);
+		this->optimalTaskOrder = OrderRPQs(this->schrageOrdered, numberOfTasks);
 	}
 
 	//recreate Q from before the change
-	//optimalTaskOrderSchrage[C].q = oldQ;
-	int indexQ = FindElementByID(oldQ_ID);
-	optimalTaskOrderSchrage[indexQ].q = oldQ;
+	int indexQ = FindElementByID(this->schrageOrdered, oldQ_ID);
+	this->schrageOrdered[indexQ].q = oldQ;
 	
-	//cmax = CalculateCmax(optimalTaskOrderSchrage, numberOfTasks);
-	PrintResult(optimalTaskOrderSchrage);
-	return optimalTaskOrderSchrage;
+	PrintResult(this->optimalTaskOrder);
+	return this->optimalTaskOrder;
 }
 
-int Carlier::FindElementByID(int old_ID)
+int Carlier::FindElementByID(RPQTasks optimalTaskOrder, int old_ID)
 {
-	for (int i = 0; i < this->optimalTaskOrderSchrage.size(); i++)
+	for (int i = 0; i < optimalTaskOrder.size(); i++)
 	{
-		if (optimalTaskOrderSchrage[i].ID == old_ID)
+		if (optimalTaskOrder[i].ID == old_ID)
 		{
 			return i;
 		}
 	}
 }
 
-int Carlier::getAppendedH(int &newR, int C, int &newP, int &newQ)
+int Carlier::getAppendedH(RPQTasks optimalTaskOrder, int &newR, int C, int &newP, int &newQ)
 {
-	int R = std::min(newR, optimalTaskOrderSchrage[C].r);
-	int P = newP + optimalTaskOrderSchrage[C].p;
-	int Q = std::min(newQ, optimalTaskOrderSchrage[C].q);
+	int R = std::min(newR, optimalTaskOrder[C].r);
+	int P = newP + optimalTaskOrder[C].p;
+	int Q = std::min(newQ, optimalTaskOrder[C].q);
 
 	return R + P + Q;
 }
@@ -156,12 +158,12 @@ int Carlier::DesignateB(RPQTasks optimalTaskOrder, int A, int upperBound)
 	return -1;
 }
 
-int Carlier::CalculatePreviousP(RPQTasks optimalTasksOrder, int begin, int end)
+int Carlier::CalculatePreviousP(RPQTasks optimalTaskOrder, int begin, int end)
 {
 	int summedP = 0;
 	for (int i = begin; i <= end; i++)
 	{
-		summedP += optimalTaskOrderSchrage[i].p;
+		summedP += optimalTaskOrder[i].p;
 	}
 	return summedP;
 }
