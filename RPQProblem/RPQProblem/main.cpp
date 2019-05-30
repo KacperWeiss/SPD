@@ -3,10 +3,13 @@
 #include <string>
 #include <memory>
 
+#include <chrono>
+
 #include "RPQSolver.h"
 #include "Schrage.h"
 #include "SchragePmtn.h"
 #include "Carlier.h"
+
 
 int main()
 {
@@ -31,11 +34,16 @@ int main()
 	
 	for (int i = 0; i < selectedFileName.size(); i++)
 	{
-		std::cout << selectedFileName[i] << ":\n";
+		auto start = std::chrono::system_clock::now();
 		
+		std::cout << selectedFileName[i] << ":\n";
 		solver->InitializeWithFile(selectedFileName[i]);
 		solver->WithAlgorithm(new Carlier())->GetOrderedRPQs();
-		
-		std::cout << "\n\n";
+		std::cout << "\n";
+
+		auto end = std::chrono::system_clock::now();
+
+		std::chrono::duration<double> elapsed_seconds = end - start;
+		std::cout << "Elapsed Time: " << elapsed_seconds.count() << "\n\n\n";
 	}
 }
