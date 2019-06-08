@@ -4,4 +4,4 @@
 
 <b>OR-tools:</b> google's tools for optimization problems
 
-<b>JobShop:</b> Johnson's and NEH algorithms for jobshop problem solving  
+<b>JobShop:</b> Johnson's, NEH and Simulated Annealing algorithms for jobshop problem solving  
