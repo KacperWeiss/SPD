@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zad1", "Zad1\Zad1.csproj", "{96297EF5-07DD-4981-8670-CBA6C7A7C259}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Johnson-NEH", "Johnson-NEH\Johnson-NEH.csproj", "{96297EF5-07DD-4981-8670-CBA6C7A7C259}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulated_Annealing", "Simulated_Annealing\Simulated_Annealing.csproj", "{55EBFFCF-BCFB-4E48-94D0-A23EB830E6E9}"
 EndProject

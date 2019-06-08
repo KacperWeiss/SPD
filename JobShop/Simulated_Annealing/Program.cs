@@ -7,7 +7,8 @@ namespace Simulated_Annealing
     
     class Program
     {
-        const string filepath = "C:\\Users\\Krystian Wojakiewicz\\Desktop\\SPD\\Zad1\\Simulated_Annealing\\test3.txt";
+        static string filepath = Directory.GetCurrentDirectory() + "\\data000.txt"; // path to file with jobshop problem data
+
         private static void readFile(string[] args, Parser parser)
         {
             try
@@ -32,12 +33,6 @@ namespace Simulated_Annealing
         static void Main(string[] args)
         {
             Parser parser = new Parser();
-
-            //if (args.Length < 2)
-            //{
-            //    System.Console.WriteLine("No arguments were given");
-            //    System.Environment.Exit(1);
-            //}
 
             readFile(args, parser);
             parser.parseFile();

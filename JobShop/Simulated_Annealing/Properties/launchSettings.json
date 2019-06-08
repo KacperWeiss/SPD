@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Simulated_Annealing": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\Krystian Wojakiewicz\\Desktop\\SPD\\JobShop\\Simulated_Annealing"
+    }
+  }
+}
